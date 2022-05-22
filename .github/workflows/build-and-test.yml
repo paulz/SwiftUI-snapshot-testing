@@ -13,18 +13,14 @@ defaults:
 jobs:
   build-and-test:
 
-    runs-on: macos-latest
+    runs-on: macos-12
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup Swift
-      uses: swift-actions/setup-swift@v1
-      with:
-        swift-version: "5.6.1"
     - name: Verify Swift Toolchain
       run: |
         swift --version
-        echo $TOOLCHAINS
+        echo Toolchain: $TOOLCHAINS
     - name: Build
       run: xcodebuild build -scheme 'SwiftUI-snapshot-testing-Package' | xcpretty
     - name: Run tests
