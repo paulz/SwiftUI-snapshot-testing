@@ -53,3 +53,18 @@ public func histogram(ciImage: CIImage) -> [UInt32] {
     }
     return result
 }
+
+public func compare(_ left: UIImage, _ right: UIImage) -> ImageComparisonResult {
+    let image1 = CIImage(image: left)!
+    let image2 = CIImage(image: right)!
+    let diffOperation = diff(image1, image2)
+    return ImageComparisonResult(difference: diffOperation.outputImage!)
+}
+
+public struct ImageComparisonResult {
+    let difference: CIImage
+    
+    public func maxColorDifference() -> Float {
+        maxColorDiff(histogram: histogram(ciImage: difference))
+    }
+}

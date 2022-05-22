@@ -1,5 +1,7 @@
 import XCTest
 import SwiftUI
+import UniformTypeIdentifiers
+import SwiftUI_snapshot_testing
 
 class RenderViewTest: XCTestCase {
     let sampleView: UIView = {
@@ -40,12 +42,15 @@ class RenderViewTest: XCTestCase {
         let image = try XCTUnwrap(view.renderLayerAsBitmap())
         XCTAssertNotNil(image)
         XCTAssertEqual(image.size, .init(width: 30, height: 20))
-        let png = try XCTUnwrap(image.pngData())
+        let pngData = try XCTUnwrap(image.pngData())
         let existing = try Data(
             contentsOf: folderUrl().appendingPathComponent("sampleSwiftUIView.png")
         )
-        XCTAssertEqual(existing, png)
-        try png.write(to: URL(fileURLWithPath: "/tmp/sampleSwiftUIView.png"))
+        
+        XCTContext.runActivity(named: "compare images") {
+            $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
+            let diff = compare(image, UIImage(data: existing)!)
+            XCTAssertEqual(0, diff.maxColorDifference(), accuracy: 0.00002)
+        }
     }
-    
 }
