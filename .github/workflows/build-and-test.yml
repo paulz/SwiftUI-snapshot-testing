@@ -5,23 +5,23 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
 defaults:
   run:
     shell: bash -l -eo pipefail {0}
-
 jobs:
   build-and-test:
-
     runs-on: macos-12
-
+    env:
+      package-scheme: SwiftUI-snapshot-testing-Package
     steps:
     - uses: actions/checkout@v3
     - name: Verify Swift Toolchain
       run: |
         swift --version
         echo Toolchain: $TOOLCHAINS
+        xcodebuild -version
+        xcodebuild -list
     - name: Build
-      run: xcodebuild build -scheme 'SwiftUI-snapshot-testing-Package' | xcpretty
+      run: xcodebuild build -scheme $package-scheme | xcpretty
     - name: Run tests
-      run: xcodebuild test -destination 'name=iPhone 12 Pro' -scheme 'SwiftUI-snapshot-testing-Package' | xcpretty
+      run: xcodebuild test -destination 'name=iPhone 12 Pro' -scheme $package-scheme | xcpretty
