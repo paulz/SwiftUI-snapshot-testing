@@ -13,7 +13,6 @@ jobs:
     runs-on: macos-12
     env:
       package: SwiftUI-snapshot-testing
-      spm_scheme: SwiftUI-snapshot-testing-Package
       destination: "platform=iOS Simulator,name=iPhone 11 Pro"
     steps:
     - uses: actions/checkout@v3
@@ -29,14 +28,14 @@ jobs:
     - name: Build
       uses: sersoft-gmbh/xcodebuild-action@master
       with:
-        project: ${{ env.package }}
-        scheme: ${{ env.spm_scheme }}
+        project: ${{ env.package }}.xcodeproj
+        scheme: ${{ env.package }}-Package
         destination: ${{ env.destination }}
         action: build-for-testing
     - name: Test
       uses: sersoft-gmbh/xcodebuild-action@master
       with:
-        project: ${{ env.package }}
-        scheme: ${{ env.spm_scheme }}
+        project: ${{ env.package }}.xcodeproj
+        scheme: ${{ env.package }}-Package
         destination: ${{ env.destination }}
         action: test-without-building
