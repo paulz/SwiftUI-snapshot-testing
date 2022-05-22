@@ -29,14 +29,14 @@ jobs:
     - name: Build
       uses: sersoft-gmbh/xcodebuild-action@master
       with:
-        spm-package: ${{ env.package }}
+        project: ${{ env.package }}
         scheme: ${{ env.spm_scheme }}
         destination: ${{ env.destination }}
         action: build-for-testing
     - name: Test
       uses: sersoft-gmbh/xcodebuild-action@master
       with:
-        spm-package: ${{ env.package }}
+        project: ${{ env.package }}
         scheme: ${{ env.spm_scheme }}
         destination: ${{ env.destination }}
         action: test-without-building
