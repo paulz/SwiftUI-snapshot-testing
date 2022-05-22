@@ -39,3 +39,10 @@ jobs:
         scheme: ${{ env.package }}-Package
         destination: ${{ env.destination }}
         action: test-without-building
+    - name: Example Test
+      uses: sersoft-gmbh/xcodebuild-action@master
+      with:
+        project: Example/Example.xcodeproj
+        scheme: Example
+        destination: ${{ env.destination }}
+        action: test
