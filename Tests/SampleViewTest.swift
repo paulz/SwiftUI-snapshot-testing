@@ -1,6 +1,6 @@
 import XCTest
 import UniformTypeIdentifiers
-@testable import SwiftUI_snapshot_testing
+@testable import ViewSnapshotTesting
 import SwiftUI
 
 class SampleViewTest: XCTestCase {

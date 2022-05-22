@@ -9,12 +9,12 @@ let package = Package(
                 .iOS(.v14)],
     products: [
         .library(
-            name: "SwiftUI-snapshot-testing",
-            targets: ["SwiftUI-snapshot-testing"]),
+            name: "SwiftUI_SnapshotTesting",
+            targets: ["ViewSnapshotTesting"]),
     ],
     targets: [
         .target(
-            name: "SwiftUI-snapshot-testing",
+            name: "ViewSnapshotTesting",
             dependencies: [],
             path: "Sources",
             linkerSettings: [.linkedFramework("XCTest",
@@ -25,7 +25,7 @@ let package = Package(
         ),
         .testTarget(
             name: "UnitTests",
-            dependencies: ["SwiftUI-snapshot-testing"],
+            dependencies: ["ViewSnapshotTesting"],
             path: "Tests",
             exclude: ["Snapshots"]
             ),
