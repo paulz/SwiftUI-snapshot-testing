@@ -19,6 +19,12 @@ jobs:
       run: |
         swift --version
         echo Toolchain: $TOOLCHAINS
+    - name: Setup Xcode version
+      uses: maxim-lobanov/setup-xcode@v1.4.1
+      with:
+        xcode-version: latest
+    - name: Verify Xcode version
+      run: |
         xcodebuild -version
         xcodebuild -list
     - name: Build
