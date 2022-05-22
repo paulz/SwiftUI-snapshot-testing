@@ -2,13 +2,14 @@ import XCTest
 import SwiftUI
 import UniformTypeIdentifiers
 
-public func verifySnapshot<P>(_ preview: P.Type = P.self) throws where P: PreviewProvider {
-    var name = "\(P.self)"
+public func verifySnapshot<P>(_ preview: P.Type = P.self, _ name: String? = nil, colorAccuracy: Float = 0.02,
+                              file: StaticString = #filePath, line: UInt = #line) throws where P: PreviewProvider {
+    var name = name ?? "\(P.self)"
     let commonPreviewSuffix = "_Previews"
     if name.hasSuffix(commonPreviewSuffix) {
         name.removeLast(commonPreviewSuffix.count)
     }
-    try verifySnapshot(preview.previews, name)
+    try verifySnapshot(preview.previews, name, colorAccuracy: colorAccuracy, file: file, line: line)
 }
 
 public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
