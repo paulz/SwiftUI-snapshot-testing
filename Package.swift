@@ -21,7 +21,8 @@ let package = Package(
         .testTarget(
             name: "UnitTests",
             dependencies: ["SwiftUI-snapshot-testing"],
-            path: "Tests"
+            path: "Tests",
+            exclude: ["Snapshots"]
             ),
     ],
     swiftLanguageVersions: [.v5]
