@@ -12,7 +12,6 @@
 		4B058458283A660A0027DAD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B058457283A660A0027DAD5 /* Assets.xcassets */; };
 		4B05845B283A660A0027DAD5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B05845A283A660A0027DAD5 /* Preview Assets.xcassets */; };
 		4B058465283A660A0027DAD5 /* SnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B058464283A660A0027DAD5 /* SnapshotTests.swift */; };
-		4B058485283A67650027DAD5 /* SwiftUI_snapshot_test.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B058484283A67650027DAD5 /* SwiftUI_snapshot_test.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B058488283A67650027DAD5 /* SwiftUI_snapshot_test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */; };
 		4B058489283A67650027DAD5 /* SwiftUI_snapshot_test.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B058491283A67B20027DAD5 /* XCTAssertSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05848E283A67B20027DAD5 /* XCTAssertSnapshot.swift */; };
@@ -73,7 +72,6 @@
 		4B058460283A660A0027DAD5 /* ApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B058464283A660A0027DAD5 /* SnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTests.swift; sourceTree = "<group>"; };
 		4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUI_snapshot_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B058484283A67650027DAD5 /* SwiftUI_snapshot_test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftUI_snapshot_test.h; sourceTree = "<group>"; };
 		4B05848E283A67B20027DAD5 /* XCTAssertSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTAssertSnapshot.swift; path = ../../Sources/XCTAssertSnapshot.swift; sourceTree = "<group>"; };
 		4B05848F283A67B20027DAD5 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = ../../Sources/Private/UIViewExtensions.swift; sourceTree = "<group>"; };
 		4B058490283A67B20027DAD5 /* maxColorDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = maxColorDiff.swift; path = ../../Sources/Private/maxColorDiff.swift; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 		4B058483283A67650027DAD5 /* SwiftUI-snapshot-test */ = {
 			isa = PBXGroup;
 			children = (
-				4B058484283A67650027DAD5 /* SwiftUI_snapshot_test.h */,
 				4B058490283A67B20027DAD5 /* maxColorDiff.swift */,
 				4B05848F283A67B20027DAD5 /* UIViewExtensions.swift */,
 				4B05848E283A67B20027DAD5 /* XCTAssertSnapshot.swift */,
@@ -184,7 +181,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B058485283A67650027DAD5 /* SwiftUI_snapshot_test.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
