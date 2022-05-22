@@ -12,7 +12,7 @@ jobs:
   build-and-test:
     runs-on: macos-12
     env:
-      package_scheme: SwiftUI-snapshot-testing-Package
+      package_destination: -destination 'name=iPhone 12 Pro' -scheme SwiftUI-snapshot-testing-Package
     steps:
     - uses: actions/checkout@v3
     - name: Verify Swift Toolchain
@@ -32,6 +32,6 @@ jobs:
         swift package generate-xcodeproj
         xcodebuild -list
     - name: Build
-      run: xcodebuild build -scheme $package_scheme | xcpretty
+      run: xcodebuild build $package_destination | xcpretty
     - name: Run tests
-      run: xcodebuild test -destination 'name=iPhone 12 Pro' -scheme $package_scheme | xcpretty
+      run: xcodebuild test $package_destination | xcpretty
