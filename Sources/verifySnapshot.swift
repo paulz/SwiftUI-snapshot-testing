@@ -2,7 +2,7 @@ import XCTest
 import SwiftUI
 import UniformTypeIdentifiers
 
-public func XCTAssertSnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
+public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
                                        file: StaticString = #filePath, line: UInt = #line) throws {
     let image = try inWindowView(view) {
         $0.renderLayerAsBitmap()

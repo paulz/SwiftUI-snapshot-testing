@@ -7,7 +7,7 @@ class SampleViewTest: XCTestCase {
     let expectedSize = CGSize(width: 30, height: 20)
 
     func testSwiftUIRendersInWindow() throws {
-        try XCTAssertSnapshot(SampleView(), "sampleSwiftUIView.png")
+        try verifySnapshot(SampleView(), "sampleSwiftUIView.png")
     }
     
     func testImageSizeIsScaledFromExpected() throws {
