@@ -26,23 +26,4 @@ class RenderViewTest: XCTestCase {
         XCTAssertEqual(existing, png)
         try png.write(to: URL(fileURLWithPath: "/tmp/sampleView.png"))
     }
-    
-    
-    func testSwiftUIRendersInWindow() throws {
-        let image = try inWindowView(SampleView()) {
-            $0.renderLayerAsBitmap()
-        }
-        XCTAssertNotNil(image)
-        XCTAssertEqual(image.size, .init(width: 30, height: 20))
-        let pngData = try XCTUnwrap(image.pngData())
-        let existing = try Data(
-            contentsOf: folderUrl().appendingPathComponent("sampleSwiftUIView.png")
-        )
-        
-        XCTContext.runActivity(named: "compare images") {
-            $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
-            let diff = compare(image, UIImage(data: existing)!)
-            XCTAssertEqual(0, diff.maxColorDifference(), accuracy: 0.02)
-        }
-    }
 }
