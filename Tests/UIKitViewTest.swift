@@ -22,7 +22,7 @@ class UIKitViewTest: XCTestCase {
         XCTAssertEqual(image.size, expectedSize)
         let pngData = try XCTUnwrap(image.pngData())
         let existing = try Data(
-            contentsOf: folderUrl().appendingPathComponent("sampleView.png")
+            contentsOf: folderUrl().appendingPathComponent("UIKit-sample-view.png")
         )
         XCTContext.runActivity(named: "compare image data") {
             $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))

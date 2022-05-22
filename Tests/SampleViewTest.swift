@@ -7,7 +7,7 @@ class SampleViewTest: XCTestCase {
     let expectedSize = CGSize(width: 30, height: 20)
 
     func testSwiftUIRendersInWindow() throws {
-        try verifySnapshot(SampleView(), "sampleSwiftUIView.png")
+        try verifySnapshot(SampleView())
     }
     
     func testImageSizeIsScaledFromExpected() throws {
@@ -16,7 +16,7 @@ class SampleViewTest: XCTestCase {
         }
         XCTAssertEqual(image.size, expectedSize)
         let expectedData = try Data(
-            contentsOf: folderUrl().appendingPathComponent("sampleSwiftUIView.png")
+            contentsOf: folderUrl().appendingPathComponent("SampleView.png")
         )
         let expectedImage = try XCTUnwrap(UIImage(data: expectedData))
         let scale = UIScreen.main.scale
