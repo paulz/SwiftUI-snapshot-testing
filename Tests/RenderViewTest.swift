@@ -27,19 +27,11 @@ class RenderViewTest: XCTestCase {
         try png.write(to: URL(fileURLWithPath: "/tmp/sampleView.png"))
     }
     
+    
     func testSwiftUIRendersInWindow() throws {
-        let window = UIWindow()
-        window.makeKeyAndVisible()
-        let rootController = UIViewController()
-        window.rootViewController = rootController
-        let controller = UIHostingController(rootView: SampleView())
-        let view = controller.view!
-        let size = view.intrinsicContentSize
-        let safeOrigin = rootController.view.safeAreaLayoutGuide.layoutFrame.origin
-        view.frame = .init(origin: safeOrigin, size: size)
-        rootController.addChild(controller)
-        rootController.view.addSubview(controller.view)
-        let image = try XCTUnwrap(view.renderLayerAsBitmap())
+        let image = try inWindowView(SampleView()) {
+            $0.renderLayerAsBitmap()
+        }
         XCTAssertNotNil(image)
         XCTAssertEqual(image.size, .init(width: 30, height: 20))
         let pngData = try XCTUnwrap(image.pngData())
