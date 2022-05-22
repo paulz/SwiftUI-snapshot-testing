@@ -36,7 +36,7 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
             let diff = compare(image, expectedImage)
             if diff.maxColorDifference() > colorAccuracy {
                 if shouldOverwriteExpected {
-                    XCTAssertNoThrow({try pngData.write(to: url)}, "failed to overwrite snapshot")
+                    try! pngData.write(to: url)
                 }
                 XCTFail(
                     """
@@ -61,7 +61,7 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
         if shouldOverwriteExpected {
             XCTContext.runActivity(named: "recording missing snapshot") {
                 $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
-                XCTAssertNoThrow({try pngData.write(to: url)}, "failed to record snapshot")
+                try! pngData.write(to: url)
             }
             XCTFail("was missing snapshot: \(fileName), now recorded", file: file, line: line)
         } else {
