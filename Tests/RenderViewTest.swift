@@ -50,7 +50,7 @@ class RenderViewTest: XCTestCase {
         XCTContext.runActivity(named: "compare images") {
             $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
             let diff = compare(image, UIImage(data: existing)!)
-            XCTAssertEqual(0, diff.maxColorDifference(), accuracy: 0.00002)
+            XCTAssertEqual(0, diff.maxColorDifference(), accuracy: 0.02)
         }
     }
 }
