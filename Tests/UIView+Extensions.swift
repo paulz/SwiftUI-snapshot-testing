@@ -1,30 +1,23 @@
-//
-//  UIView+Extensions.swift
-//  Experiments
-//
-//  Created by Paul Zabelin on 5/11/22.
-//
-
 import UIKit
 
-func withinBitmapContext(size: CGSize, block: (CGContext)->Void) -> UIImage? {
-    UIGraphicsBeginImageContextWithOptions(size, true, UIScreen.main.scale)
-    block(UIGraphicsGetCurrentContext()!)
-    defer {
-        UIGraphicsEndImageContext()
-    }
-    return UIGraphicsGetImageFromCurrentImageContext()
-}
-
 extension UIView {
-    func renderLayerAsBitmap() -> UIImage? {
-        withinBitmapContext(size: bounds.size) {
-            layer.render(in: $0)
+    func renderFormat() -> UIGraphicsImageRendererFormat {
+        let format = UIGraphicsImageRendererFormat(for: .current)
+        format.opaque = true
+        format.preferredRange = .standard
+        return format
+    }
+    func renderer() -> UIGraphicsImageRenderer {
+        UIGraphicsImageRenderer(bounds: bounds, format: renderFormat())
+    }
+    func renderLayerAsBitmap() -> UIImage {
+        renderer().image {
+            layer.render(in: $0.cgContext)
         }
     }
     
     func renderHierarchyOnScreen() -> UIImage {
-        UIGraphicsImageRenderer(size: bounds.size).image { _ in
+        renderer().image { _ in
             drawHierarchy(in: bounds, afterScreenUpdates: true)
         }
     }

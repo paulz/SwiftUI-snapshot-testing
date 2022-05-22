@@ -1,10 +1,3 @@
-//
-//  SampleView.swift
-//  Experiments
-//
-//  Created by Paul Zabelin on 5/11/22.
-//
-
 import SwiftUI
 
 struct SampleView: View {

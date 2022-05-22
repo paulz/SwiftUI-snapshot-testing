@@ -1,10 +1,3 @@
-//
-//  RenderViewTest.swift
-//  ExperimentsTests
-//
-//  Created by Paul Zabelin on 5/11/22.
-//
-
 import XCTest
 import SwiftUI
 
