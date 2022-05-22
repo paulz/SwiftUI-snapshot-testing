@@ -2,29 +2,33 @@ import XCTest
 import SwiftUI
 import UniformTypeIdentifiers
 
-public func XCTAssertSnapshot<V: View>(_ view: V, _ name: String, colorAccuracy: Float = 0.02,
+public func XCTAssertSnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
                                        file: StaticString = #filePath, line: UInt = #line) throws {
     let image = try inWindowView(view) {
         $0.renderLayerAsBitmap()
     }
     let isRunningOnCI = ProcessInfo.processInfo.environment.keys.contains("CI")
     let pngData = try XCTUnwrap(image.pngData())
-    let url = folderUrl(String(describing: file)).appendingPathComponent(name)
+    let fileName = name ?? "\(V.self).png"
+    let url = folderUrl(String(describing: file)).appendingPathComponent(fileName)
     if let expectedData = try? Data(contentsOf: url) {
         let expectedImage = try XCTUnwrap(UIImage(data: expectedData))
         XCTContext.runActivity(named: "compare images") {
             $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
             let diff = compare(image, expectedImage)
-            XCTAssertEqual(0, diff.maxColorDifference(), accuracy: colorAccuracy)
+            XCTAssertEqual(0, diff.maxColorDifference(), accuracy: colorAccuracy,
+                           "view image should match snapshot",
+                           file: file, line: line)
         }
     } else {
         if isRunningOnCI {
-            XCTFail("missing snapshot: \(name)")
+            XCTFail("missing snapshot: \(fileName), not recording on CI", file: file, line: line)
         } else {
             try XCTContext.runActivity(named: "recording missing snapshot") {
                 $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
                 try pngData.write(to: url)
             }
+            XCTFail("was missing snapshot: \(fileName), now recorded", file: file, line: line)
         }
     }
 }

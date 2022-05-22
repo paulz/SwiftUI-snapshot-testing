@@ -19,6 +19,7 @@
 		4B0584A1283ADCD80027DAD5 /* maxColorDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05849E283ADCB00027DAD5 /* maxColorDiff.swift */; };
 		4B0584A2283ADCD80027DAD5 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05849F283ADCB00027DAD5 /* UIViewExtensions.swift */; };
 		4B0584A3283ADCD80027DAD5 /* XCTAssertSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0584A0283ADCB00027DAD5 /* XCTAssertSnapshot.swift */; };
+		4B0584A5283ADFBF0027DAD5 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0584A4283ADFBF0027DAD5 /* FavoriteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		4B05849E283ADCB00027DAD5 /* maxColorDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = maxColorDiff.swift; path = ../Sources/Private/maxColorDiff.swift; sourceTree = "<group>"; };
 		4B05849F283ADCB00027DAD5 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = ../Sources/Private/UIViewExtensions.swift; sourceTree = "<group>"; };
 		4B0584A0283ADCB00027DAD5 /* XCTAssertSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XCTAssertSnapshot.swift; path = ../Sources/XCTAssertSnapshot.swift; sourceTree = "<group>"; };
+		4B0584A4283ADFBF0027DAD5 /* FavoriteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				4B058453283A66090027DAD5 /* ExampleApp.swift */,
+				4B0584A4283ADFBF0027DAD5 /* FavoriteView.swift */,
 				4B058455283A66090027DAD5 /* ContentView.swift */,
 				4B058457283A660A0027DAD5 /* Assets.xcassets */,
 				4B058459283A660A0027DAD5 /* Preview Content */,
@@ -318,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B058456283A66090027DAD5 /* ContentView.swift in Sources */,
+				4B0584A5283ADFBF0027DAD5 /* FavoriteView.swift in Sources */,
 				4B058454283A66090027DAD5 /* ExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
