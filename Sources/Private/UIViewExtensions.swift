@@ -11,7 +11,7 @@ extension UIView {
         UIGraphicsImageRenderer(bounds: bounds, format: renderFormat())
     }
     
-    public func renderLayerAsBitmap() -> UIImage {
+    func renderLayerAsBitmap() -> UIImage {
         renderer().image {
             layer.render(in: $0.cgContext)
         }

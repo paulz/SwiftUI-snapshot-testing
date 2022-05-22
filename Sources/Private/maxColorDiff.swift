@@ -19,7 +19,7 @@ func diff(_ old: CGImage, _ new: CGImage) -> CICompositeOperation {
     diff(CIImage(cgImage: old), CIImage(cgImage: new))
 }
 
-public func diff(_ old: CIImage, _ new: CIImage) -> CICompositeOperation {
+func diff(_ old: CIImage, _ new: CIImage) -> CICompositeOperation {
     let differenceFilter: CICompositeOperation = CIFilter.differenceBlendMode()
     differenceFilter.inputImage = old
     differenceFilter.backgroundImage = new
@@ -33,7 +33,7 @@ func histogramData(_ ciImage: CIImage) -> Data {
     return hist.value(forKey: "outputData") as! Data
 }
 
-public func maxColorDiff(histogram: [UInt32]) -> Float {
+func maxColorDiff(histogram: [UInt32]) -> Float {
     let rgb = stride(from: 0, to: histogram.count, by: 4).map { (index: Int)-> UInt32 in
         histogram[index] + histogram[index + 1] + histogram[index + 2]
     }
@@ -44,7 +44,7 @@ public func maxColorDiff(histogram: [UInt32]) -> Float {
     }
 }
 
-public func histogram(ciImage: CIImage) -> [UInt32] {
+func histogram(ciImage: CIImage) -> [UInt32] {
     let data = histogramData(ciImage)
     let count = data.count / MemoryLayout<UInt32>.stride
     let result: [UInt32] = data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) in
@@ -54,17 +54,17 @@ public func histogram(ciImage: CIImage) -> [UInt32] {
     return result
 }
 
-public func compare(_ left: UIImage, _ right: UIImage) -> ImageComparisonResult {
+func compare(_ left: UIImage, _ right: UIImage) -> ImageComparisonResult {
     let image1 = CIImage(image: left)!
     let image2 = CIImage(image: right)!
     let diffOperation = diff(image1, image2)
     return ImageComparisonResult(difference: diffOperation.outputImage!)
 }
 
-public struct ImageComparisonResult {
+struct ImageComparisonResult {
     let difference: CIImage
     
-    public func maxColorDifference() -> Float {
+    func maxColorDifference() -> Float {
         maxColorDiff(histogram: histogram(ciImage: difference))
     }
 }
