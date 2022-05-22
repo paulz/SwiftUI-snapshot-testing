@@ -16,7 +16,12 @@ let package = Package(
         .target(
             name: "SwiftUI-snapshot-testing",
             dependencies: [],
-            path: "Sources"
+            path: "Sources",
+            linkerSettings: [.linkedFramework("XCTest",
+                                              .when(platforms: [.iOS,
+                                                                .macOS,
+                                                                .tvOS,
+                                                                .watchOS]))]
         ),
         .testTarget(
             name: "UnitTests",
