@@ -7,15 +7,25 @@ public func XCTAssertSnapshot<V: View>(_ view: V, _ name: String, colorAccuracy:
     let image = try inWindowView(view) {
         $0.renderLayerAsBitmap()
     }
+    let isRunningOnCI = ProcessInfo.processInfo.environment.keys.contains("CI")
     let pngData = try XCTUnwrap(image.pngData())
-    let expectedData = try Data(
-        contentsOf: folderUrl(String(describing: file)).appendingPathComponent(name)
-    )
-    let expectedImage = try XCTUnwrap(UIImage(data: expectedData))
-    XCTContext.runActivity(named: "compare images") {
-        $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
-        let diff = compare(image, expectedImage)
-        XCTAssertEqual(0, diff.maxColorDifference(), accuracy: colorAccuracy)
+    let url = folderUrl(String(describing: file)).appendingPathComponent(name)
+    if let expectedData = try? Data(contentsOf: url) {
+        let expectedImage = try XCTUnwrap(UIImage(data: expectedData))
+        XCTContext.runActivity(named: "compare images") {
+            $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
+            let diff = compare(image, expectedImage)
+            XCTAssertEqual(0, diff.maxColorDifference(), accuracy: colorAccuracy)
+        }
+    } else {
+        if isRunningOnCI {
+            XCTFail("missing snapshot: \(name)")
+        } else {
+            try XCTContext.runActivity(named: "recording missing snapshot") {
+                $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
+                try pngData.write(to: url)
+            }
+        }
     }
 }
 
