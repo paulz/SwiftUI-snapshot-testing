@@ -2,6 +2,15 @@ import XCTest
 import SwiftUI
 import UniformTypeIdentifiers
 
+public func verifySnapshot<P>(_ preview: P.Type = P.self) throws where P: PreviewProvider {
+    var name = "\(P.self)"
+    let commonPreviewSuffix = "_Previews"
+    if name.hasSuffix(commonPreviewSuffix) {
+        name.removeLast(commonPreviewSuffix.count)
+    }
+    try verifySnapshot(preview.previews, name)
+}
+
 public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
                                        file: StaticString = #filePath, line: UInt = #line) throws {
     let image = try inWindowView(view) {
@@ -10,7 +19,7 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
     let isRunningOnCI = ProcessInfo.processInfo.environment.keys.contains("CI")
     let shouldOverwriteExpected = !isRunningOnCI
     let pngData = try XCTUnwrap(image.pngData())
-    let fileName = name ?? "\(V.self).png"
+    let fileName = (name ?? "\(V.self)") + ".png"
     let url = folderUrl(String(describing: file)).appendingPathComponent(fileName)
     if let expectedData = try? Data(contentsOf: url) {
         let expectedImage = try XCTUnwrap(UIImage(data: expectedData))
