@@ -11,7 +11,7 @@
 		4B058456283A66090027DAD5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B058455283A66090027DAD5 /* ContentView.swift */; };
 		4B058458283A660A0027DAD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B058457283A660A0027DAD5 /* Assets.xcassets */; };
 		4B05845B283A660A0027DAD5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B05845A283A660A0027DAD5 /* Preview Assets.xcassets */; };
-		4B058465283A660A0027DAD5 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B058464283A660A0027DAD5 /* ExampleTests.swift */; };
+		4B058465283A660A0027DAD5 /* SnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B058464283A660A0027DAD5 /* SnapshotTests.swift */; };
 		4B058485283A67650027DAD5 /* SwiftUI_snapshot_test.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B058484283A67650027DAD5 /* SwiftUI_snapshot_test.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B058488283A67650027DAD5 /* SwiftUI_snapshot_test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */; };
 		4B058489283A67650027DAD5 /* SwiftUI_snapshot_test.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -70,14 +70,15 @@
 		4B058455283A66090027DAD5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4B058457283A660A0027DAD5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B05845A283A660A0027DAD5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		4B058460283A660A0027DAD5 /* ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B058464283A660A0027DAD5 /* ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTests.swift; sourceTree = "<group>"; };
+		4B058460283A660A0027DAD5 /* ApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B058464283A660A0027DAD5 /* SnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTests.swift; sourceTree = "<group>"; };
 		4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUI_snapshot_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B058484283A67650027DAD5 /* SwiftUI_snapshot_test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftUI_snapshot_test.h; sourceTree = "<group>"; };
 		4B05848E283A67B20027DAD5 /* XCTAssertSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTAssertSnapshot.swift; path = ../../Sources/XCTAssertSnapshot.swift; sourceTree = "<group>"; };
 		4B05848F283A67B20027DAD5 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = ../../Sources/Private/UIViewExtensions.swift; sourceTree = "<group>"; };
 		4B058490283A67B20027DAD5 /* maxColorDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = maxColorDiff.swift; path = ../../Sources/Private/maxColorDiff.swift; sourceTree = "<group>"; };
 		4B058495283A67DD0027DAD5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		4B058499283A6D1C0027DAD5 /* Snapshots */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Snapshots; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				4B058452283A66090027DAD5 /* Example */,
-				4B058463283A660A0027DAD5 /* ExampleTests */,
+				4B058463283A660A0027DAD5 /* ApplicationTests */,
 				4B058483283A67650027DAD5 /* SwiftUI-snapshot-test */,
 				4B058451283A66090027DAD5 /* Products */,
 				4B058494283A67DD0027DAD5 /* Frameworks */,
@@ -122,7 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				4B058450283A66090027DAD5 /* Example.app */,
-				4B058460283A660A0027DAD5 /* ExampleTests.xctest */,
+				4B058460283A660A0027DAD5 /* ApplicationTests.xctest */,
 				4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */,
 			);
 			name = Products;
@@ -148,12 +149,12 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		4B058463283A660A0027DAD5 /* ExampleTests */ = {
+		4B058463283A660A0027DAD5 /* ApplicationTests */ = {
 			isa = PBXGroup;
 			children = (
-				4B058464283A660A0027DAD5 /* ExampleTests.swift */,
+				4B058464283A660A0027DAD5 /* SnapshotTests.swift */,
+				4B058499283A6D1C0027DAD5 /* Snapshots */,
 			);
-			name = ExampleTests;
 			path = ApplicationTests;
 			sourceTree = "<group>";
 		};
@@ -209,9 +210,9 @@
 			productReference = 4B058450283A66090027DAD5 /* Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4B05845F283A660A0027DAD5 /* ExampleTests */ = {
+		4B05845F283A660A0027DAD5 /* ApplicationTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4B058477283A660A0027DAD5 /* Build configuration list for PBXNativeTarget "ExampleTests" */;
+			buildConfigurationList = 4B058477283A660A0027DAD5 /* Build configuration list for PBXNativeTarget "ApplicationTests" */;
 			buildPhases = (
 				4B05845C283A660A0027DAD5 /* Sources */,
 				4B05845D283A660A0027DAD5 /* Frameworks */,
@@ -222,9 +223,9 @@
 			dependencies = (
 				4B058462283A660A0027DAD5 /* PBXTargetDependency */,
 			);
-			name = ExampleTests;
+			name = ApplicationTests;
 			productName = ExampleTests;
-			productReference = 4B058460283A660A0027DAD5 /* ExampleTests.xctest */;
+			productReference = 4B058460283A660A0027DAD5 /* ApplicationTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		4B058481283A67650027DAD5 /* SwiftUI-snapshot-test */ = {
@@ -283,7 +284,7 @@
 			projectRoot = "";
 			targets = (
 				4B05844F283A66090027DAD5 /* Example */,
-				4B05845F283A660A0027DAD5 /* ExampleTests */,
+				4B05845F283A660A0027DAD5 /* ApplicationTests */,
 				4B058481283A67650027DAD5 /* SwiftUI-snapshot-test */,
 			);
 		};
@@ -329,7 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B058465283A660A0027DAD5 /* ExampleTests.swift in Sources */,
+				4B058465283A660A0027DAD5 /* SnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,7 +540,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.github.paulz.swiftui-snapshot-test.ExampleTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.paulz.swiftui-snapshot-test.Example.ApplicationTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -558,7 +559,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.github.paulz.swiftui-snapshot-test.ExampleTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.paulz.swiftui-snapshot-test.Example.ApplicationTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -649,7 +650,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4B058477283A660A0027DAD5 /* Build configuration list for PBXNativeTarget "ExampleTests" */ = {
+		4B058477283A660A0027DAD5 /* Build configuration list for PBXNativeTarget "ApplicationTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4B058478283A660A0027DAD5 /* Debug */,
