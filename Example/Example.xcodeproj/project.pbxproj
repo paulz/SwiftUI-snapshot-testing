@@ -14,11 +14,11 @@
 		4B058465283A660A0027DAD5 /* SnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B058464283A660A0027DAD5 /* SnapshotTests.swift */; };
 		4B058488283A67650027DAD5 /* SwiftUI_snapshot_test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */; };
 		4B058489283A67650027DAD5 /* SwiftUI_snapshot_test.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4B058491283A67B20027DAD5 /* XCTAssertSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05848E283A67B20027DAD5 /* XCTAssertSnapshot.swift */; };
-		4B058492283A67B20027DAD5 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05848F283A67B20027DAD5 /* UIViewExtensions.swift */; };
-		4B058493283A67B20027DAD5 /* maxColorDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B058490283A67B20027DAD5 /* maxColorDiff.swift */; };
 		4B058496283A67DE0027DAD5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058495283A67DD0027DAD5 /* XCTest.framework */; platformFilter = ios; };
 		4B058497283A67DE0027DAD5 /* XCTest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058495283A67DD0027DAD5 /* XCTest.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4B0584A1283ADCD80027DAD5 /* maxColorDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05849E283ADCB00027DAD5 /* maxColorDiff.swift */; };
+		4B0584A2283ADCD80027DAD5 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05849F283ADCB00027DAD5 /* UIViewExtensions.swift */; };
+		4B0584A3283ADCD80027DAD5 /* XCTAssertSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0584A0283ADCB00027DAD5 /* XCTAssertSnapshot.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,11 +72,11 @@
 		4B058460283A660A0027DAD5 /* ApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B058464283A660A0027DAD5 /* SnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTests.swift; sourceTree = "<group>"; };
 		4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUI_snapshot_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B05848E283A67B20027DAD5 /* XCTAssertSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XCTAssertSnapshot.swift; path = ../../Sources/XCTAssertSnapshot.swift; sourceTree = "<group>"; };
-		4B05848F283A67B20027DAD5 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = ../../Sources/Private/UIViewExtensions.swift; sourceTree = "<group>"; };
-		4B058490283A67B20027DAD5 /* maxColorDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = maxColorDiff.swift; path = ../../Sources/Private/maxColorDiff.swift; sourceTree = "<group>"; };
 		4B058495283A67DD0027DAD5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		4B058499283A6D1C0027DAD5 /* Snapshots */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Snapshots; sourceTree = "<group>"; };
+		4B05849E283ADCB00027DAD5 /* maxColorDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = maxColorDiff.swift; path = ../Sources/Private/maxColorDiff.swift; sourceTree = "<group>"; };
+		4B05849F283ADCB00027DAD5 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = ../Sources/Private/UIViewExtensions.swift; sourceTree = "<group>"; };
+		4B0584A0283ADCB00027DAD5 /* XCTAssertSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XCTAssertSnapshot.swift; path = ../Sources/XCTAssertSnapshot.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +111,7 @@
 			children = (
 				4B058452283A66090027DAD5 /* Example */,
 				4B058463283A660A0027DAD5 /* ApplicationTests */,
-				4B058483283A67650027DAD5 /* SwiftUI-snapshot-test */,
+				4B05849D283ADCA10027DAD5 /* SwiftUI-snapshot-test */,
 				4B058451283A66090027DAD5 /* Products */,
 				4B058494283A67DD0027DAD5 /* Frameworks */,
 			);
@@ -156,22 +156,22 @@
 			path = ApplicationTests;
 			sourceTree = "<group>";
 		};
-		4B058483283A67650027DAD5 /* SwiftUI-snapshot-test */ = {
-			isa = PBXGroup;
-			children = (
-				4B058490283A67B20027DAD5 /* maxColorDiff.swift */,
-				4B05848F283A67B20027DAD5 /* UIViewExtensions.swift */,
-				4B05848E283A67B20027DAD5 /* XCTAssertSnapshot.swift */,
-			);
-			path = "SwiftUI-snapshot-test";
-			sourceTree = "<group>";
-		};
 		4B058494283A67DD0027DAD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				4B058495283A67DD0027DAD5 /* XCTest.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4B05849D283ADCA10027DAD5 /* SwiftUI-snapshot-test */ = {
+			isa = PBXGroup;
+			children = (
+				4B05849E283ADCB00027DAD5 /* maxColorDiff.swift */,
+				4B05849F283ADCB00027DAD5 /* UIViewExtensions.swift */,
+				4B0584A0283ADCB00027DAD5 /* XCTAssertSnapshot.swift */,
+			);
+			name = "SwiftUI-snapshot-test";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,9 +334,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B058493283A67B20027DAD5 /* maxColorDiff.swift in Sources */,
-				4B058492283A67B20027DAD5 /* UIViewExtensions.swift in Sources */,
-				4B058491283A67B20027DAD5 /* XCTAssertSnapshot.swift in Sources */,
+				4B0584A3283ADCD80027DAD5 /* XCTAssertSnapshot.swift in Sources */,
+				4B0584A2283ADCD80027DAD5 /* UIViewExtensions.swift in Sources */,
+				4B0584A1283ADCD80027DAD5 /* maxColorDiff.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
