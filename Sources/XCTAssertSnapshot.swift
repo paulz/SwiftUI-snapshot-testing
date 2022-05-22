@@ -9,7 +9,7 @@ public func XCTAssertSnapshot<V: View>(_ view: V, _ name: String, colorAccuracy:
     }
     let pngData = try XCTUnwrap(image.pngData())
     let expectedData = try Data(
-        contentsOf: folderUrl(String(describing: file)).appendingPathComponent("sampleSwiftUIView.png")
+        contentsOf: folderUrl(String(describing: file)).appendingPathComponent(name)
     )
     let expectedImage = try XCTUnwrap(UIImage(data: expectedData))
     XCTContext.runActivity(named: "compare images") {
