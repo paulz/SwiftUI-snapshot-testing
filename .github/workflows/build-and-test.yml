@@ -12,26 +12,31 @@ jobs:
   build-and-test:
     runs-on: macos-12
     env:
-      package_destination: -destination 'name=iPhone 12 Pro' -scheme SwiftUI-snapshot-testing-Package
+      package: SwiftUI-snapshot-testing
+      spm_scheme: SwiftUI-snapshot-testing-Package
+      destination: "platform=iOS Simulator,name=iPhone 11 Pro"
     steps:
     - uses: actions/checkout@v3
-    - name: Verify Swift Toolchain
-      run: |
-        swift --version
-        echo Toolchain: $TOOLCHAINS
     - name: Setup Xcode version
       uses: maxim-lobanov/setup-xcode@v1.4.1
       with:
         xcode-version: latest
-    - name: Verify Xcode version
-      run: |
-        xcodebuild -version
-        xcodebuild -list
     - name: Generate Swift package Xcode project
       run: |
+        swift --version
         swift package generate-xcodeproj
         xcodebuild -list
     - name: Build
-      run: xcodebuild build $package_destination | xcpretty
-    - name: Run tests
-      run: xcodebuild test $package_destination | xcpretty
+      uses: sersoft-gmbh/xcodebuild-action@master
+      with:
+        spm-package: ${{ env.package }}
+        scheme: ${{ env.spm_scheme }}
+        destination: ${{ env.destination }}
+        action: build-for-testing
+    - name: Test
+      uses: sersoft-gmbh/xcodebuild-action@master
+      with:
+        spm-package: ${{ env.package }}
+        scheme: ${{ env.spm_scheme }}
+        destination: ${{ env.destination }}
+        action: test-without-building
