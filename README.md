@@ -17,8 +17,8 @@ Add Swift Package to a project Test target
 
 See [Example iOS app](https://github.com/paulz/SwiftUI-snapshot-testing/tree/main/Example) project with [SnapshotTests.swift](https://github.com/paulz/SwiftUI-snapshot-testing/blob/main/Example/ApplicationTests/SnapshotTests.swift)
 
-    func testViews() throws {
-        try verifySnapshot(FavoriteView_Previews.self)
-        try verifySnapshot(ContentView())
-        try verifySnapshot(Text("SwiftUI").foregroundColor(.red), "example")
+    func testViews() {
+        verifySnapshot(FavoriteView_Previews.self)
+        verifySnapshot(ContentView())
+        verifySnapshot(Text("SwiftUI").foregroundColor(.red), "example")
     }

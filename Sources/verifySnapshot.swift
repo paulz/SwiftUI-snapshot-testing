@@ -3,35 +3,40 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 public func verifySnapshot<P>(_ preview: P.Type = P.self, _ name: String? = nil, colorAccuracy: Float = 0.02,
-                              file: StaticString = #filePath, line: UInt = #line) throws where P: PreviewProvider {
+                              file: StaticString = #filePath, line: UInt = #line) where P: PreviewProvider {
     var name = name ?? "\(P.self)"
     let commonPreviewSuffix = "_Previews"
     if name.hasSuffix(commonPreviewSuffix) {
         name.removeLast(commonPreviewSuffix.count)
     }
-    try verifySnapshot(preview.previews, name, colorAccuracy: colorAccuracy, file: file, line: line)
+    verifySnapshot(preview.previews, name, colorAccuracy: colorAccuracy, file: file, line: line)
 }
 
 public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
-                                       file: StaticString = #filePath, line: UInt = #line) throws {
-    let image = try inWindowView(view) {
+                                       file: StaticString = #filePath, line: UInt = #line) {
+    guard let image = try? inWindowView(view, block: {
         $0.renderLayerAsBitmap()
+    }) else {
+        XCTFail("failed to get snapshot of view")
+        return
     }
     let isRunningOnCI = ProcessInfo.processInfo.environment.keys.contains("CI")
     let shouldOverwriteExpected = !isRunningOnCI
-    let pngData = try XCTUnwrap(image.pngData())
+    guard let pngData = image.pngData() else {
+        XCTFail("failed to get image data")
+        return
+    }
     let fileName = (name ?? "\(V.self)") + ".png"
     let url = folderUrl(String(describing: file)).appendingPathComponent(fileName)
-    if let expectedData = try? Data(contentsOf: url) {
-        let expectedImage = try XCTUnwrap(UIImage(data: expectedData))
-        try XCTContext.runActivity(named: "compare images") {
+    if let expectedData = try? Data(contentsOf: url), let expectedImage = UIImage(data: expectedData) {
+        XCTContext.runActivity(named: "compare images") {
             let actualImage = XCTAttachment(data: pngData, uniformTypeIdentifier: UTType.png.identifier)
             actualImage.name = "actual image"
             $0.add(actualImage)
             let diff = compare(image, expectedImage)
             if diff.maxColorDifference() > colorAccuracy {
                 if shouldOverwriteExpected {
-                    try pngData.write(to: url)
+                    XCTAssertNoThrow({try pngData.write(to: url)}, "failed to overwrite snapshot")
                 }
                 XCTFail(
                     """
@@ -44,16 +49,19 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
                 )
             }
             let ciImage = diff.difference
-            let diffImage = CIContext().createCGImage(ciImage, from: ciImage.extent)
-            let diffAttachment = XCTAttachment(image: UIImage(cgImage: try XCTUnwrap(diffImage)))
+            guard let diffImage = CIContext().createCGImage(ciImage, from: ciImage.extent) else {
+                XCTFail("failed to get image of difference")
+                return
+            }
+            let diffAttachment = XCTAttachment(image: UIImage(cgImage: diffImage))
             diffAttachment.name = "difference"
             $0.add(diffAttachment)
         }
     } else {
         if shouldOverwriteExpected {
-            try XCTContext.runActivity(named: "recording missing snapshot") {
+            XCTContext.runActivity(named: "recording missing snapshot") {
                 $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
-                try pngData.write(to: url)
+                XCTAssertNoThrow({try pngData.write(to: url)}, "failed to record snapshot")
             }
             XCTFail("was missing snapshot: \(fileName), now recorded", file: file, line: line)
         } else {

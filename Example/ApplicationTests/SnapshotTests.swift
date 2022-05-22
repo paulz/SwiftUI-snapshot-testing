@@ -5,8 +5,8 @@ import SwiftUI
 
 class SnapshotTests: XCTestCase {
     func testViews() throws {
-        try verifySnapshot(FavoriteView_Previews.self)
-        try verifySnapshot(ContentView())
-        try verifySnapshot(Text("SwiftUI").foregroundColor(.red), "example")
+        verifySnapshot(FavoriteView_Previews.self)
+        verifySnapshot(ContentView())
+        verifySnapshot(Text("SwiftUI").foregroundColor(.red), "example")
     }
 }
