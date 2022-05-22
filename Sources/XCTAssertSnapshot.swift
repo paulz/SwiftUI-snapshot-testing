@@ -15,7 +15,7 @@ public func XCTAssertSnapshot<V: View>(_ view: V, _ name: String, colorAccuracy:
     XCTContext.runActivity(named: "compare images") {
         $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
         let diff = compare(image, expectedImage)
-        XCTAssertEqual(0, diff.maxColorDifference(), accuracy: 0.00002)
+        XCTAssertEqual(0, diff.maxColorDifference(), accuracy: colorAccuracy)
     }
 }
 
