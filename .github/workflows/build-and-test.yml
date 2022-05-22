@@ -1,0 +1,19 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: xcodebuild build -scheme 'SwiftUI-snapshot-testing-Package' | xcpretty
+    - name: Run tests
+      run: xcodebuild test -destination 'name=iPhone 12 Pro' -scheme 'SwiftUI-snapshot-testing-Package' | xcpretty
