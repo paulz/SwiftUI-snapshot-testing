@@ -1,10 +1,15 @@
 import XCTest
 import UniformTypeIdentifiers
-import SwiftUI_snapshot_testing
+@testable import SwiftUI_snapshot_testing
+import SwiftUI
 
 class SampleViewTest: XCTestCase {
     let expectedSize = CGSize(width: 30, height: 20)
 
+    func testSwiftUIRendersInWindow2() throws {
+        try XCTAssertSnapshot(SampleView(), "sampleSwiftUIView.png", colorAccuracy: 0.00002)
+    }
+    
     func testSwiftUIRendersInWindow() throws {
         let image = try inWindowView(SampleView()) {
             $0.renderLayerAsBitmap()

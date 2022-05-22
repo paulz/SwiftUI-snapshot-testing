@@ -18,7 +18,7 @@ import XCTest
 
 import CoreImage
 import CoreImage.CIFilterBuiltins
-import SwiftUI_snapshot_testing
+@testable import SwiftUI_snapshot_testing
 
 class DiffPerformanceTest: XCTestCase {
     let bundle = Bundle(for: DiffPerformanceTest.self)

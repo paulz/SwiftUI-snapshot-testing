@@ -1,7 +1,7 @@
 import XCTest
 import SwiftUI
 import UniformTypeIdentifiers
-import SwiftUI_snapshot_testing
+@testable import SwiftUI_snapshot_testing
 
 class UIKitViewTest: XCTestCase {
     let expectedSize = CGSize(width: 40, height: 20)
