@@ -12,6 +12,22 @@ public func verifySnapshot<P>(_ preview: P.Type = P.self, _ name: String? = nil,
     verifySnapshot(preview.previews, name, colorAccuracy: colorAccuracy, file: file, line: line)
 }
 
+@discardableResult
+func assertNoThrow<T>(_ expression: () throws -> T, _ message: @autoclosure () -> String = "", file: StaticString = #filePath, line: UInt = #line) -> T? {
+    do {
+        return try expression()
+    } catch {
+        XCTFail(message() + ", due to \(error)")
+    }
+    return nil
+}
+
+func ensureFolder(url: URL) throws {
+    try FileManager.default
+        .createDirectory(at: url.deletingLastPathComponent(),
+                         withIntermediateDirectories: true)
+}
+
 public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
                                        file: StaticString = #filePath, line: UInt = #line) {
     guard let image = try? inWindowView(view, block: {
@@ -28,6 +44,14 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
     }
     let fileName = (name ?? "\(V.self)") + ".png"
     let url = folderUrl(String(describing: file)).appendingPathComponent(fileName)
+    
+    func writeActual(onFailure: String) {
+        assertNoThrow({
+            try ensureFolder(url: url)
+            try pngData.write(to: url)
+        }, onFailure, file: file, line: line)
+    }
+    
     if let expectedData = try? Data(contentsOf: url), let expectedImage = UIImage(data: expectedData) {
         XCTContext.runActivity(named: "compare images") {
             let actualImage = XCTAttachment(data: pngData, uniformTypeIdentifier: UTType.png.identifier)
@@ -36,11 +60,11 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
             let diff = compare(image, expectedImage)
             if diff.maxColorDifference() > colorAccuracy {
                 if shouldOverwriteExpected {
-                    try! pngData.write(to: url)
+                    writeActual(onFailure: "failed to record actual image")
                 }
                 XCTFail(
                     """
-                    view did not match snapshot, overwriting expected
+                    view did not match snapshot
                     some pixels were different by \(diff.maxColorDifference() * 100)% in color
                     max allowed difference in color: \(colorAccuracy * 100)%
                     see attached `difference` image between actual and expected
@@ -61,9 +85,9 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
         if shouldOverwriteExpected {
             XCTContext.runActivity(named: "recording missing snapshot") {
                 $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
-                try! pngData.write(to: url)
+                writeActual(onFailure: "failed to record missing snapshot")
             }
-            XCTFail("was missing snapshot: \(fileName), now recorded", file: file, line: line)
+            XCTFail("was missing snapshot: \(fileName), now recorded at: \(url.path)", file: file, line: line)
         } else {
             XCTFail("missing snapshot: \(fileName), not recording on CI", file: file, line: line)
         }
