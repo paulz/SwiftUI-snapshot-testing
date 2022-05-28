@@ -55,8 +55,8 @@ func histogram(ciImage: CIImage) -> [UInt32] {
 }
 
 func compare(_ left: UIImage, _ right: UIImage) -> ImageComparisonResult {
-    let image1 = CIImage(image: left)!
-    let image2 = CIImage(image: right)!
+    let image1 = CIImage(image: left)!.premultiplyingAlpha()
+    let image2 = CIImage(image: right)!.premultiplyingAlpha()
     let diffOperation = diff(image1, image2)
     return ImageComparisonResult(difference: diffOperation.outputImage!)
 }
