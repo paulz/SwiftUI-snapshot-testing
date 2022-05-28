@@ -3,7 +3,7 @@ import UIKit
 extension UIView {
     func renderFormat() -> UIGraphicsImageRendererFormat {
         let format = UIGraphicsImageRendererFormat(for: .current)
-        format.opaque = true
+        format.opaque = false
         format.preferredRange = .standard
         return format
     }
