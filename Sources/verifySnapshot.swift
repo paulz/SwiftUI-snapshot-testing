@@ -42,7 +42,8 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
         XCTFail("failed to get image data")
         return
     }
-    let fileName = (name ?? "\(V.self)") + ".png"
+    let viewName = name ?? "\(V.self)"
+    let fileName = viewName + ".png"
     let url = folderUrl(String(describing: file)).appendingPathComponent(fileName)
     
     func writeActual(onFailure: String) {
@@ -53,7 +54,7 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
     }
     
     if let expectedData = try? Data(contentsOf: url), let expectedImage = UIImage(data: expectedData) {
-        XCTContext.runActivity(named: "compare images") {
+        XCTContext.runActivity(named: viewName) {
             let actualImage = XCTAttachment(data: pngData, uniformTypeIdentifier: UTType.png.identifier)
             actualImage.name = "actual image"
             $0.add(actualImage)
