@@ -100,11 +100,21 @@ func folderUrl(_ filePath: String = #filePath) -> URL {
         .appendingPathComponent("Snapshots")
 }
 
+/**
+ Avoids runtime warning: *Unbalanced calls to begin/end appearance transition for UIViewController*
+ 
+ see: https://github.com/paulz/SwiftUI-snapshot-testing/issues/11
+ */
+func allowAppearanceTransition() {
+    RunLoop.current.run(until: .init(timeIntervalSinceNow: 0))
+}
+
 func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) -> T) throws -> T {
     let window = UIWindow()
     window.makeKeyAndVisible()
     let rootController = UIViewController()
     window.rootViewController = rootController
+    allowAppearanceTransition()
     let controller = UIHostingController(rootView: swiftUIView)
     let view = try XCTUnwrap(controller.view)
     let size = view.intrinsicContentSize
