@@ -110,20 +110,28 @@ func allowAppearanceTransition() {
 }
 
 func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) -> T) throws -> T {
+//    let window = UIApplication.shared.value(forKey: "keyWindow") as! UIWindow
+//    let rootController = window.rootViewController!
+
     let window = UIWindow()
     window.makeKeyAndVisible()
     let rootController = UIViewController()
     window.rootViewController = rootController
+
     allowAppearanceTransition()
     let controller = UIHostingController(rootView: swiftUIView)
     let view = try XCTUnwrap(controller.view)
-    let size = view.intrinsicContentSize
-    let safeOrigin = rootController.view.safeAreaLayoutGuide.layoutFrame.origin
-    view.frame = .init(origin: safeOrigin, size: size)
+    let layoutFrame = rootController.view.safeAreaLayoutGuide.layoutFrame
+    var size = view.intrinsicContentSize
+    if size == .zero {
+        size = layoutFrame.size
+    }
+    let safeOrigin = layoutFrame.origin
     rootController.addChild(controller)
+    view.frame = .init(origin: safeOrigin, size: size)
     rootController.view.addSubview(controller.view)
     view.frame = .init(origin: safeOrigin, size: size)
-    XCTAssertEqual(size, view.intrinsicContentSize)
+    XCTAssertEqual(view.bounds.size, size)
     defer {
         view.removeFromSuperview()
         controller.removeFromParent()
