@@ -53,7 +53,7 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
         }, onFailure, file: file, line: line)
     }
     
-    if let expectedData = try? Data(contentsOf: url), let expectedImage = UIImage(data: expectedData) {
+    if let expectedData = try? Data(contentsOf: url) {
         XCTContext.runActivity(named: viewName) {
             let actualImage = XCTAttachment(data: pngData, uniformTypeIdentifier: UTType.png.identifier)
             actualImage.name = "actual image"
@@ -127,6 +127,7 @@ func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) -> T) throws -> 
     if size == .zero {
         size = layoutFrame.size
     }
+    view.backgroundColor = .clear
     let safeOrigin = layoutFrame.origin
     rootController.addChild(controller)
     view.frame = .init(origin: safeOrigin, size: size)

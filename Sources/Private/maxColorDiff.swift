@@ -77,7 +77,7 @@ func compare(_ left: Data, _ right: Data) -> ImageComparisonResult {
     let delta = CIFilter.labDeltaE()
     delta.inputImage = image1
     delta.image2 = image2
-    let diff2 = delta.outputImage!
+    let diff2 = delta.outputImage!.premultiplyingAlpha()
     print(delta.outputKeys)
     print(delta.inputKeys)
     print(diff2.properties)
@@ -100,7 +100,7 @@ func compare(_ left: Data, _ right: Data) -> ImageComparisonResult {
     data.withUnsafeMutableBytes { ptr in
         context.render(maxImage, toBitmap: ptr.baseAddress!, rowBytes: 4, bounds: CGRect(origin: .zero, size: CGSize(width: 1, height: 1)), format: .RGBA8, colorSpace: nil)
     }
-    print(data)
+    print([UInt8](data))
     try! context.writePNGRepresentation(of: diff2, to: URL(fileURLWithPath: "/tmp/max.png"), format: .RGBA8, colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!)
         //.pngRepresentation(of: maxImage, format: .RGBA8, colorSpace: nil)
     
