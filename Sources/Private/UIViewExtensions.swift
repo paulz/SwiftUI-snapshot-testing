@@ -4,7 +4,7 @@ extension UIView {
     func renderFormat() -> UIGraphicsImageRendererFormat {
         let format = UIGraphicsImageRendererFormat(for: .current)
         format.opaque = false
-        format.preferredRange = .standard
+        format.preferredRange = .extended
         return format
     }
     func renderer() -> UIGraphicsImageRenderer {
@@ -16,6 +16,13 @@ extension UIView {
             layer.render(in: $0.cgContext)
         }
     }
+    
+    func renderLayerAsPNG() -> Data {
+        renderer().pngData {
+            layer.render(in: $0.cgContext)
+        }
+    }
+
     
     func renderHierarchyOnScreen() -> UIImage {
         renderer().image { _ in

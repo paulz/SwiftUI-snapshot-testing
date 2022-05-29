@@ -30,18 +30,18 @@ func ensureFolder(url: URL) throws {
 
 public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
                                        file: StaticString = #filePath, line: UInt = #line) {
-    guard let image = try? inWindowView(view, block: {
-        $0.renderLayerAsBitmap()
+    guard let pngData = try? inWindowView(view, block: {
+        $0.renderLayerAsPNG()
     }) else {
         XCTFail("failed to get snapshot of view")
         return
     }
     let isRunningOnCI = ProcessInfo.processInfo.environment.keys.contains("CI")
     let shouldOverwriteExpected = !isRunningOnCI
-    guard let pngData = image.pngData() else {
-        XCTFail("failed to get image data")
-        return
-    }
+//    guard let pngData = image.pngData() else {
+//        XCTFail("failed to get image data")
+//        return
+//    }
     let viewName = name ?? "\(V.self)"
     let fileName = viewName + ".png"
     let url = folderUrl(String(describing: file)).appendingPathComponent(fileName)
@@ -58,7 +58,7 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
             let actualImage = XCTAttachment(data: pngData, uniformTypeIdentifier: UTType.png.identifier)
             actualImage.name = "actual image"
             $0.add(actualImage)
-            let diff = compare(image, expectedImage)
+            let diff = compare(pngData, expectedData)
             if diff.maxColorDifference() > colorAccuracy {
                 if shouldOverwriteExpected {
                     writeActual(onFailure: "failed to record actual image")

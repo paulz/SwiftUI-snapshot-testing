@@ -58,10 +58,70 @@ func compare(_ left: UIImage, _ right: UIImage) -> ImageComparisonResult {
     let image1 = CIImage(image: left)!.premultiplyingAlpha()
     let image2 = CIImage(image: right)!.premultiplyingAlpha()
     let diffOperation = diff(image1, image2)
-    return ImageComparisonResult(difference: diffOperation.outputImage!)
+    let delta = CIFilter.labDeltaE()
+    delta.inputImage = image1
+    delta.image2 = image2
+    let diff2 = delta.outputImage!
+    print(delta.outputKeys)
+    print(delta.inputKeys)
+    print(diff2.properties)
+    let comp = PerceptiveColorDiff(difference: diff2)
+    print(comp.maxColorDifference())
+    return AbsoluteColorDiff(difference: diffOperation.outputImage!)
 }
 
-struct ImageComparisonResult {
+func compare(_ left: Data, _ right: Data) -> ImageComparisonResult {
+    let image1 = CIImage(data: left)!.premultiplyingAlpha()
+    let image2 = CIImage(data: right)!.premultiplyingAlpha()
+    
+    let delta = CIFilter.labDeltaE()
+    delta.inputImage = image1
+    delta.image2 = image2
+    let diff2 = delta.outputImage!
+    print(delta.outputKeys)
+    print(delta.inputKeys)
+    print(diff2.properties)
+    let comp = PerceptiveColorDiff(difference: diff2)
+    print(comp.maxColorDifference())
+
+    
+    let diffOperation = diff(image1, image2)
+    
+    let minMax = CIFilter.areaMaximum()
+    minMax.inputImage = diff2
+    minMax.setValue(CIVector(cgRect: diff2.extent), forKey: kCIInputExtentKey)
+    print(minMax.outputKeys)
+    let maxImage = minMax.outputImage!
+
+//    let context = CIContext(options: [.workingColorSpace : NSNull(), .outputColorSpace: NSNull()])
+        let context = CIContext(options: [.workingColorSpace : CGColorSpace(name: CGColorSpace.sRGB)!, .outputColorSpace: CGColorSpace(name: CGColorSpace.sRGB)!])
+//    let context = CIContext()
+    var data = Data([1,2,3,4])
+    data.withUnsafeMutableBytes { ptr in
+        context.render(maxImage, toBitmap: ptr.baseAddress!, rowBytes: 4, bounds: CGRect(origin: .zero, size: CGSize(width: 1, height: 1)), format: .RGBA8, colorSpace: nil)
+    }
+    print(data)
+    try! context.writePNGRepresentation(of: diff2, to: URL(fileURLWithPath: "/tmp/max.png"), format: .RGBA8, colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!)
+        //.pngRepresentation(of: maxImage, format: .RGBA8, colorSpace: nil)
+    
+    return AbsoluteColorDiff(difference: diffOperation.outputImage!)
+}
+
+protocol ImageComparisonResult {
+    var difference: CIImage {get}
+    
+    func maxColorDifference() -> Float
+}
+
+struct PerceptiveColorDiff: ImageComparisonResult {
+    let difference: CIImage
+    
+    func maxColorDifference() -> Float {
+        maxColorDiff(histogram: histogram(ciImage: difference))
+    }
+}
+
+struct AbsoluteColorDiff: ImageComparisonResult {
     let difference: CIImage
     
     func maxColorDifference() -> Float {
