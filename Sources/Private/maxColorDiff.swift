@@ -71,13 +71,18 @@ func compare(_ left: UIImage, _ right: UIImage) -> ImageComparisonResult {
 }
 
 func compare(_ left: Data, _ right: Data) -> ImageComparisonResult {
-    let image1 = CIImage(data: left)!.premultiplyingAlpha()
-    let image2 = CIImage(data: right)!.premultiplyingAlpha()
+    let options: [CIImageOption : Any] = [
+        .colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!
+    ]
+    let image1 = CIImage(data: left, options: options)!
+        .premultiplyingAlpha()
+    let image2 = CIImage(data: right, options: options)!
+        .premultiplyingAlpha()
     
     let delta = CIFilter.labDeltaE()
-    delta.inputImage = image1
-    delta.image2 = image2
-    let diff2 = delta.outputImage!.premultiplyingAlpha()
+    delta.inputImage = image1.settingAlphaOne(in: image1.extent)
+    delta.image2 = image2.settingAlphaOne(in: image1.extent)
+    let diff2 = delta.outputImage!
     print(delta.outputKeys)
     print(delta.inputKeys)
     print(diff2.properties)
@@ -94,7 +99,7 @@ func compare(_ left: Data, _ right: Data) -> ImageComparisonResult {
     let maxImage = minMax.outputImage!
 
 //    let context = CIContext(options: [.workingColorSpace : NSNull(), .outputColorSpace: NSNull()])
-        let context = CIContext(options: [.workingColorSpace : CGColorSpace(name: CGColorSpace.sRGB)!, .outputColorSpace: CGColorSpace(name: CGColorSpace.sRGB)!])
+    let context = CIContext(options: [.workingColorSpace : CGColorSpace(name: CGColorSpace.sRGB)!, .outputColorSpace: CGColorSpace(name: CGColorSpace.sRGB)!])
 //    let context = CIContext()
     var data = Data([1,2,3,4])
     data.withUnsafeMutableBytes { ptr in

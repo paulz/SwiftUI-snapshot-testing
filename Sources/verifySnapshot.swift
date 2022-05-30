@@ -31,7 +31,7 @@ func ensureFolder(url: URL) throws {
 public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
                                        file: StaticString = #filePath, line: UInt = #line) {
     guard let pngData = try? inWindowView(view, block: {
-        $0.renderLayerAsPNG()
+        $0.renderHierarchyAsPNG()
     }) else {
         XCTFail("failed to get snapshot of view")
         return
