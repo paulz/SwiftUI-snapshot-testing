@@ -27,40 +27,18 @@ extension UIView {
     }
     
     func renderLayerAsPNG() -> Data {
-        let ren = renderer()
-        return ren.pngData { context in
-//            layer.render(in: $0.cgContext)
-//            try! ren.runDrawingActions { another in
-//                drawHierarchy(in: bounds, afterScreenUpdates: true)
-//            }
-            drawHierarchy(in: bounds, afterScreenUpdates: true)
+        renderer().pngData {
+            layer.render(in: $0.cgContext)
         }
     }
 
     func renderHierarchyAsPNG() -> Data {
-        let ren = renderer()
-        return ren.pngData { context in
-//            layer.render(in: $0.cgContext)
-//            try! ren.runDrawingActions { another in
-//                drawHierarchy(in: bounds, afterScreenUpdates: true)
-//            }
+        renderer().pngData { context in
             drawHierarchy(in: bounds, afterScreenUpdates: true)
         }
     }
     func renderHierarchyOnScreen() -> UIImage {
-        let ren = renderer()
-        assert(ren.allowsImageOutput)
-        let clazz: AnyClass = UIGraphicsImageRenderer.rendererContextClass()
-        print(clazz)
-        try! ren.runDrawingActions { context in
-            drawHierarchy(in: bounds, afterScreenUpdates: true)
-            
-        }
-        ren.pngData { context in
-            
-        }
-        return ren.image { context in
-            context.currentImage
+        renderer().image { context in
             drawHierarchy(in: bounds, afterScreenUpdates: true)
         }
     }
