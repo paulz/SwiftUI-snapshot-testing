@@ -21,8 +21,8 @@ func diff(_ old: CGImage, _ new: CGImage) -> CICompositeOperation {
 
 func diff(_ old: CIImage, _ new: CIImage) -> CICompositeOperation {
     let differenceFilter: CICompositeOperation = CIFilter.differenceBlendMode()
-    differenceFilter.inputImage = old
-    differenceFilter.backgroundImage = new
+    differenceFilter.inputImage = old.settingAlphaOne(in: old.extent)
+    differenceFilter.backgroundImage = new.settingAlphaOne(in: new.extent)
     return differenceFilter
 }
 
