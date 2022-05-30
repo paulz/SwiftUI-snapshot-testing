@@ -19,7 +19,6 @@ class SampleViewTest: XCTestCase {
             contentsOf: folderUrl().appendingPathComponent("SampleView.png")
         )
         let expectedImage = try XCTUnwrap(UIImage(data: expectedData))
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(expectedImage.size, expectedSize.applying(.init(scaleX: scale, y: scale)))
+        XCTAssertEqual(expectedImage.size, expectedSize)
     }
 }
