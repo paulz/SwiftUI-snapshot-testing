@@ -4,7 +4,7 @@ extension UIView {
     func renderFormat() -> UIGraphicsImageRendererFormat {
         let traits = UITraitCollection(traitsFrom: [
             UITraitCollection(displayGamut: .SRGB),
-            UITraitCollection(displayScale: 3.0),
+            UITraitCollection(displayScale: 1.0),
             UITraitCollection(activeAppearance: .active),
             UITraitCollection(userInterfaceLevel: .base),
             UITraitCollection(legibilityWeight: .regular),
