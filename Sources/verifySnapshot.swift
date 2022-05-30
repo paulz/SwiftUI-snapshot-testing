@@ -130,6 +130,7 @@ func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) -> T) throws -> 
     view.backgroundColor = .clear
     let safeOrigin = layoutFrame.origin
     rootController.addChild(controller)
+    allowAppearanceTransition()
     view.frame = .init(origin: safeOrigin, size: size)
     rootController.view.addSubview(controller.view)
     view.frame = .init(origin: safeOrigin, size: size)
@@ -137,6 +138,7 @@ func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) -> T) throws -> 
     defer {
         view.removeFromSuperview()
         controller.removeFromParent()
+        allowAppearanceTransition()
     }
     return block(view)
 }
