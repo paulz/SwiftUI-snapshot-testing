@@ -105,7 +105,7 @@ func compare(_ left: Data, _ right: Data) -> ImageComparisonResult {
     data.withUnsafeMutableBytes { ptr in
         context.render(maxImage, toBitmap: ptr.baseAddress!, rowBytes: 4, bounds: CGRect(origin: .zero, size: CGSize(width: 1, height: 1)), format: .RGBA8, colorSpace: nil)
     }
-    print([UInt8](data))
+    print("perception:", [UInt8](data))
     try! context.writePNGRepresentation(of: diff2, to: URL(fileURLWithPath: "/tmp/max.png"), format: .RGBA8, colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!)
         //.pngRepresentation(of: maxImage, format: .RGBA8, colorSpace: nil)
     
