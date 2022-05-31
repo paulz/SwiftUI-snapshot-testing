@@ -21,11 +21,13 @@ class UIKitViewTest: XCTestCase {
         let image = sampleView.renderLayerAsBitmap()
         XCTAssertEqual(image.size, expectedSize)
         let pngData = try XCTUnwrap(image.pngData())
-        let existing = try Data(
-            contentsOf: folderUrl().appendingPathComponent("UIKit-sample-view.png")
-        )
-        XCTContext.runActivity(named: "compare image data") {
+        let url = folderUrl().appendingPathComponent("UIKit-sample-view.png")
+        let existing = try Data(contentsOf: url)
+        try XCTContext.runActivity(named: "compare image data") {
             $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
+            if existing != pngData {
+                try pngData.write(to: url)
+            }
             XCTAssertEqual(existing, pngData)
         }
     }

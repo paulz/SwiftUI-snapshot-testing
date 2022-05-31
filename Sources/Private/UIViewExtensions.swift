@@ -2,7 +2,7 @@ import UIKit
 
 extension UITraitCollection {
     static let snapshots = UITraitCollection(traitsFrom: [
-        UITraitCollection(displayGamut: .SRGB),
+        UITraitCollection(displayGamut: .P3),
         UITraitCollection(displayScale: 3.0),
         UITraitCollection(activeAppearance: .active),
         UITraitCollection(userInterfaceLevel: .base),
@@ -16,7 +16,7 @@ extension UIGraphicsImageRendererFormat {
     static let snapshots: UIGraphicsImageRendererFormat = {
         let format = UIGraphicsImageRendererFormat(for: .snapshots)
         format.opaque = false
-        format.preferredRange = .standard
+        format.preferredRange = .extended
         return format
     }()
 }
