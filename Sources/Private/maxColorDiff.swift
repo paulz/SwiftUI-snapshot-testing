@@ -2,6 +2,12 @@ import UIKit
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
+extension CIImage {
+    func settingAlphaOne() -> CIImage {
+        settingAlphaOne(in: extent)
+    }
+}
+
 func diff(_ old: UIImage, _ new: UIImage) -> UIImage {
     let differenceFilter = diff(
         old.cgImage!,
@@ -21,8 +27,8 @@ func diff(_ old: CGImage, _ new: CGImage) -> CICompositeOperation {
 
 func diff(_ old: CIImage, _ new: CIImage) -> CICompositeOperation {
     let differenceFilter: CICompositeOperation = CIFilter.differenceBlendMode()
-    differenceFilter.inputImage = old.settingAlphaOne(in: old.extent)
-    differenceFilter.backgroundImage = new.settingAlphaOne(in: new.extent)
+    differenceFilter.inputImage = old.settingAlphaOne()
+    differenceFilter.backgroundImage = new.settingAlphaOne()
     return differenceFilter
 }
 
