@@ -69,7 +69,7 @@ func compare(_ left: UIImage, _ right: UIImage) -> ImageComparisonResult {
 
 func compare(_ left: Data, _ right: Data) -> ImageComparisonResult {
     let options: [CIImageOption : Any] = [
-        .colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!
+        .colorSpace: CGColorSpace(name: CGColorSpace.extendedSRGB)!
     ]
     let image1 = CIImage(data: left, options: options)!
         .premultiplyingAlpha()
