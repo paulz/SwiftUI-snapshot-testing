@@ -7,6 +7,15 @@ class SampleViewTest: XCTestCase {
     let expectedSize = CGSize(width: 30, height: 20)
 
     func testSwiftUIRendersInWindow() {
+        let options = XCTExpectedFailure.Options()
+        options.issueMatcher = { issue in
+            issue.type == .assertionFailure &&
+            issue.compactDescription.hasSuffix("unable to take snapshot of the view")
+        }
+        XCTExpectFailure("Unable to render SwiftUI view hierarchy",
+                         options: options)
+        // xctest warning:
+        // [Snapshotting] Rendering a view that has not been committed to render server is not supported.
         verifySnapshot(SampleView(), "SampleView-blank", colorAccuracy: 0)
     }
     

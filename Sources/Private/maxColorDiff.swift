@@ -35,7 +35,7 @@ func diff(_ old: CIImage, _ new: CIImage) -> CICompositeOperation {
 func histogramData(_ ciImage: CIImage) -> Data {
     let hist = CIFilter.areaHistogram()
     hist.inputImage = ciImage
-    hist.setValue(CIVector(cgRect: ciImage.extent), forKey: kCIInputExtentKey)
+    hist.extent = ciImage.extent
     return hist.value(forKey: "outputData") as! Data
 }
 

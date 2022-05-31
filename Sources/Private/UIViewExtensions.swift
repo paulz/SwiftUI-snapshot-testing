@@ -1,4 +1,5 @@
 import UIKit
+import XCTest
 
 extension UITraitCollection {
     static let snapshots = UITraitCollection(traitsFrom: [
@@ -43,7 +44,11 @@ extension UIView {
     }
     
     func drawHierarchyActions(_ context: UIGraphicsImageRendererContext) {
-        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        context.cgContext.setFlatness(0.1)
+        context.cgContext.setShouldAntialias(true)
+        context.cgContext.setAllowsAntialiasing(true)
+        XCTAssertTrue(drawHierarchy(in: bounds, afterScreenUpdates: true),
+                      "unable to take snapshot of the view")
     }
     
     func renderHierarchyOnScreen() -> UIImage {
