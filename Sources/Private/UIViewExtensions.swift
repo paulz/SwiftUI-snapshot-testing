@@ -1,45 +1,52 @@
 import UIKit
 
-extension UIView {
-    func renderFormat() -> UIGraphicsImageRendererFormat {
-        let traits = UITraitCollection(traitsFrom: [
-            UITraitCollection(displayGamut: .SRGB),
-            UITraitCollection(displayScale: 1.0),
-            UITraitCollection(activeAppearance: .active),
-            UITraitCollection(userInterfaceLevel: .base),
-            UITraitCollection(legibilityWeight: .regular),
-            UITraitCollection(userInterfaceStyle: .light),
-            UITraitCollection(preferredContentSizeCategory: .medium),
-            ])
-        let format = UIGraphicsImageRendererFormat(for: traits)
+extension UITraitCollection {
+    static let snapshots = UITraitCollection(traitsFrom: [
+        UITraitCollection(displayGamut: .SRGB),
+        UITraitCollection(displayScale: 1.0),
+        UITraitCollection(activeAppearance: .active),
+        UITraitCollection(userInterfaceLevel: .base),
+        UITraitCollection(legibilityWeight: .regular),
+        UITraitCollection(userInterfaceStyle: .light),
+        UITraitCollection(preferredContentSizeCategory: .medium),
+    ])
+}
+
+extension UIGraphicsImageRendererFormat {
+    static let snapshots: UIGraphicsImageRendererFormat = {
+        let format = UIGraphicsImageRendererFormat(for: .snapshots)
         format.opaque = false
         format.preferredRange = .standard
         return format
-    }
+    }()
+}
+
+extension UIView {
     func renderer() -> UIGraphicsImageRenderer {
-        UIGraphicsImageRenderer(bounds: bounds, format: renderFormat())
+        UIGraphicsImageRenderer(bounds: bounds, format: .snapshots)
     }
     
     func renderLayerAsBitmap() -> UIImage {
-        renderer().image {
-            layer.render(in: $0.cgContext)
-        }
+        renderer().image(actions: renderLayerActions(_:))
     }
     
     func renderLayerAsPNG() -> Data {
-        renderer().pngData {
-            layer.render(in: $0.cgContext)
-        }
+        renderer().pngData(actions: renderLayerActions(_:))
+    }
+    
+    func renderLayerActions(_ context: UIGraphicsImageRendererContext) {
+        layer.render(in: context.cgContext)
     }
 
     func renderHierarchyAsPNG() -> Data {
-        renderer().pngData { context in
-            drawHierarchy(in: bounds, afterScreenUpdates: true)
-        }
+        renderer().pngData(actions: drawHierarchyActions(_:))
     }
+    
+    func drawHierarchyActions(_ context: UIGraphicsImageRendererContext) {
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+    }
+    
     func renderHierarchyOnScreen() -> UIImage {
-        renderer().image { context in
-            drawHierarchy(in: bounds, afterScreenUpdates: true)
-        }
+        renderer().image(actions: drawHierarchyActions(_:))
     }
 }
