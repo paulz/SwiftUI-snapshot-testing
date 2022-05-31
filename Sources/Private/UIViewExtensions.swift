@@ -3,7 +3,7 @@ import UIKit
 extension UITraitCollection {
     static let snapshots = UITraitCollection(traitsFrom: [
         UITraitCollection(displayGamut: .SRGB),
-        UITraitCollection(displayScale: 1.0),
+        UITraitCollection(displayScale: 3.0),
         UITraitCollection(activeAppearance: .active),
         UITraitCollection(userInterfaceLevel: .base),
         UITraitCollection(legibilityWeight: .regular),

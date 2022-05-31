@@ -24,6 +24,6 @@ class SampleViewTest: XCTestCase {
             try image.pngData()?.write(to: url)
         }
         XCTAssertEqual(colorDifference, 0)
-        XCTAssertEqual(expectedImage.size, expectedSize)
+        XCTAssertEqual(expectedImage.size, expectedSize.applying(.init(scaleX: 3, y: 3)))
     }
 }
