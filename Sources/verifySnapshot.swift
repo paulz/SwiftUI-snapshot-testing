@@ -38,10 +38,6 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
     }
     let isRunningOnCI = ProcessInfo.processInfo.environment.keys.contains("CI")
     let shouldOverwriteExpected = !isRunningOnCI
-//    guard let pngData = image.pngData() else {
-//        XCTFail("failed to get image data")
-//        return
-//    }
     let viewName = name ?? "\(V.self)"
     let fileName = viewName + ".png"
     let url = folderUrl(String(describing: file)).appendingPathComponent(fileName)

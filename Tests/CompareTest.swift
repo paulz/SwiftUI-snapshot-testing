@@ -1,5 +1,3 @@
-//
-
 @testable import ViewSnapshotTesting
 import XCTest
 
