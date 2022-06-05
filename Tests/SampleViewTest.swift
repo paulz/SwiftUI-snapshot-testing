@@ -33,6 +33,7 @@ class SampleViewTest: XCTestCase {
             try image.pngData()?.write(to: url)
         }
         XCTAssertEqual(colorDifference, 0)
-        XCTAssertEqual(expectedImage.size, expectedSize.applying(.init(scaleX: 3, y: 3)))
+        let scale = UITraitCollection.snapshots.displayScale
+        XCTAssertEqual(expectedImage.size, expectedSize.applying(.init(scaleX: scale, y: scale)))
     }
 }
