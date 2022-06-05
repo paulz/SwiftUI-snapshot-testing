@@ -67,9 +67,14 @@ func compare(_ left: UIImage, _ right: UIImage) -> ImageComparisonResult {
     return ImageComparisonResult(difference: diffOperation.outputImage!)
 }
 
+let workColorSpace = CGColorSpace(name: CGColorSpace.displayP3)!
+//let workColorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
+//let workColorSpace = CGColorSpace(name: CGColorSpace.extendedDisplayP3)!
+
 func compare(_ left: Data, _ right: Data) -> ImageComparisonResult {
     let options: [CIImageOption : Any] = [
-        .colorSpace: CGColorSpace(name: CGColorSpace.extendedSRGB)!
+        .colorSpace: workColorSpace,
+        .nearestSampling: NSNumber(booleanLiteral: true)
     ]
     let image1 = CIImage(data: left, options: options)!
         .premultiplyingAlpha()

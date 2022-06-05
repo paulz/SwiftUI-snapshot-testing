@@ -55,7 +55,8 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
             actualImage.name = "actual image"
             $0.add(actualImage)
             let diff = compare(pngData, expectedData)
-            if diff.maxColorDifference() > colorAccuracy {
+            let actualDifference = diff.maxColorDifference()
+            if actualDifference > colorAccuracy {
                 if shouldOverwriteExpected {
                     writeActual(onFailure: "failed to record actual image")
                 }
@@ -70,11 +71,18 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
                 )
             }
             let ciImage = diff.difference
-            guard let diffImage = CIContext().createCGImage(ciImage, from: ciImage.extent) else {
-                XCTFail("failed to get image of difference")
-                return
-            }
-            let diffAttachment = XCTAttachment(image: UIImage(cgImage: diffImage))
+            let context = CIContext(options: [
+                .workingColorSpace : workColorSpace,
+                .allowLowPower: NSNumber(booleanLiteral: false),
+                .highQualityDownsample: NSNumber(booleanLiteral: true),
+                .outputColorSpace: workColorSpace,
+                .useSoftwareRenderer: NSNumber(booleanLiteral: true),
+                .cacheIntermediates: NSNumber(booleanLiteral: false),
+                .priorityRequestLow: NSNumber(booleanLiteral: false),
+                .name: "difference"
+            ])
+            let data = context.pngRepresentation(of: ciImage.premultiplyingAlpha(), format: .RGBA8, colorSpace: workColorSpace)!
+            let diffAttachment = XCTAttachment(data: data, uniformTypeIdentifier: UTType.png.identifier)
             diffAttachment.name = "difference"
             $0.add(diffAttachment)
         }

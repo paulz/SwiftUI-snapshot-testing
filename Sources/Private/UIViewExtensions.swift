@@ -4,7 +4,7 @@ import XCTest
 extension UITraitCollection {
     static let snapshots = UITraitCollection(traitsFrom: [
         UITraitCollection(displayGamut: .P3),
-        UITraitCollection(displayScale: 3.0),
+        UITraitCollection(displayScale: 1.0),
         UITraitCollection(activeAppearance: .active),
         UITraitCollection(userInterfaceLevel: .base),
         UITraitCollection(legibilityWeight: .regular),
@@ -44,9 +44,14 @@ extension UIView {
     }
     
     func drawHierarchyActions(_ context: UIGraphicsImageRendererContext) {
-        context.cgContext.setFlatness(0.1)
-        context.cgContext.setShouldAntialias(true)
-        context.cgContext.setAllowsAntialiasing(true)
+        context.cgContext.setFlatness(0.01)
+        context.cgContext.setShouldAntialias(false)
+        context.cgContext.setAllowsAntialiasing(false)
+        context.cgContext.setAllowsFontSubpixelPositioning(false)
+        context.cgContext.setShouldSubpixelPositionFonts(false)
+        context.cgContext.setShouldSmoothFonts(false)
+        context.cgContext.setAllowsFontSubpixelQuantization(false)
+        context.cgContext.setShouldSubpixelQuantizeFonts(false)
         XCTAssertTrue(drawHierarchy(in: bounds, afterScreenUpdates: true),
                       "unable to take snapshot of the view")
     }
