@@ -17,7 +17,7 @@ extension UIGraphicsImageRendererFormat {
     static let snapshots: UIGraphicsImageRendererFormat = {
         let format = UIGraphicsImageRendererFormat(for: .snapshots)
         format.opaque = false
-        format.preferredRange = .extended
+        format.preferredRange = .standard
         return format
     }()
 }
