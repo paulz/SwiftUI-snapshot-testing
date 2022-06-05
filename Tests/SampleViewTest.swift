@@ -26,14 +26,14 @@ class SampleViewTest: XCTestCase {
         let url = folderUrl().appendingPathComponent("SampleView.png")
         XCTAssertEqual(image.size, expectedSize)
         let expectedData = try Data(contentsOf: url)
-        let expectedImage = try XCTUnwrap(UIImage(data: expectedData, scale: 1))
+        let scale = UITraitCollection.snapshots.displayScale
+        let expectedImage = try XCTUnwrap(UIImage(data: expectedData, scale: scale))
         let result = compare(image, expectedImage)
         let colorDifference = result.maxColorDifference()
         if colorDifference > 0 {
             try image.pngData()?.write(to: url)
         }
         XCTAssertEqual(colorDifference, 0)
-        let scale = UITraitCollection.snapshots.displayScale
         XCTAssertEqual(expectedImage.size, expectedSize.applying(.init(scaleX: scale, y: scale)))
     }
 }

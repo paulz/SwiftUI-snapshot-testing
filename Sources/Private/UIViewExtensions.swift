@@ -36,14 +36,11 @@ extension UIView {
     }
     
     func renderLayerActions(_ context: UIGraphicsImageRendererContext) {
+        configureContext(context)
         layer.render(in: context.cgContext)
     }
-
-    func renderHierarchyAsPNG() -> Data {
-        renderer().pngData(actions: drawHierarchyActions(_:))
-    }
     
-    func drawHierarchyActions(_ context: UIGraphicsImageRendererContext) {
+    func configureContext(_ context: UIGraphicsImageRendererContext) {
         context.cgContext.setFlatness(0.01)
         context.cgContext.setShouldAntialias(false)
         context.cgContext.setAllowsAntialiasing(false)
@@ -52,6 +49,14 @@ extension UIView {
         context.cgContext.setShouldSmoothFonts(false)
         context.cgContext.setAllowsFontSubpixelQuantization(false)
         context.cgContext.setShouldSubpixelQuantizeFonts(false)
+    }
+
+    func renderHierarchyAsPNG() -> Data {
+        renderer().pngData(actions: drawHierarchyActions(_:))
+    }
+    
+    func drawHierarchyActions(_ context: UIGraphicsImageRendererContext) {
+        configureContext(context)
         XCTAssertTrue(drawHierarchy(in: bounds, afterScreenUpdates: true),
                       "unable to take snapshot of the view")
     }
