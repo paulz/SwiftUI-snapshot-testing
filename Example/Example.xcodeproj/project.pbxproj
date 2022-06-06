@@ -12,8 +12,6 @@
 		4B058458283A660A0027DAD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B058457283A660A0027DAD5 /* Assets.xcassets */; };
 		4B05845B283A660A0027DAD5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B05845A283A660A0027DAD5 /* Preview Assets.xcassets */; };
 		4B058465283A660A0027DAD5 /* SnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B058464283A660A0027DAD5 /* SnapshotTests.swift */; };
-		4B058488283A67650027DAD5 /* SwiftUI_snapshot_test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */; };
-		4B058489283A67650027DAD5 /* SwiftUI_snapshot_test.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B058496283A67DE0027DAD5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058495283A67DD0027DAD5 /* XCTest.framework */; platformFilter = ios; };
 		4B0584A1283ADCD80027DAD5 /* maxColorDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05849E283ADCB00027DAD5 /* maxColorDiff.swift */; };
 		4B0584A2283ADCD80027DAD5 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05849F283ADCB00027DAD5 /* UIViewExtensions.swift */; };
@@ -33,13 +31,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4B05844F283A66090027DAD5;
 			remoteInfo = Example;
-		};
-		4B058486283A67650027DAD5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4B058448283A66080027DAD5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4B058481283A67650027DAD5;
-			remoteInfo = "SwiftUI-snapshot-test";
 		};
 		4B9C5738284DE2DF001DE13A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -64,7 +55,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4B058489283A67650027DAD5 /* SwiftUI_snapshot_test.framework in Embed Frameworks */,
 				4B9C573B284DE2DF001DE13A /* PreviewGroup.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -107,7 +97,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B058488283A67650027DAD5 /* SwiftUI_snapshot_test.framework in Frameworks */,
 				4B9C573A284DE2DF001DE13A /* PreviewGroup.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,7 +239,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4B058487283A67650027DAD5 /* PBXTargetDependency */,
 				4B9C5739284DE2DF001DE13A /* PBXTargetDependency */,
 			);
 			name = Example;
@@ -439,11 +427,6 @@
 			isa = PBXTargetDependency;
 			target = 4B05844F283A66090027DAD5 /* Example */;
 			targetProxy = 4B058461283A660A0027DAD5 /* PBXContainerItemProxy */;
-		};
-		4B058487283A67650027DAD5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4B058481283A67650027DAD5 /* SwiftUI-snapshot-test */;
-			targetProxy = 4B058486283A67650027DAD5 /* PBXContainerItemProxy */;
 		};
 		4B9C5739284DE2DF001DE13A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

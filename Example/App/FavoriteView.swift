@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PreviewGroup
 
 /// https://www.hackingwithswift.com/articles/226/5-steps-to-better-swiftui-views
 struct FavoriteView: View {
@@ -25,7 +26,11 @@ struct FavoriteView: View {
 
 struct FavoriteView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoriteView()
-            .previewLayout(.sizeThatFits)
+        PreviewGroup {
+            FavoriteView()
+            FavoriteView()
+                .background(Color.white)
+        }
+        .previewLayout(.sizeThatFits)
     }
 }
