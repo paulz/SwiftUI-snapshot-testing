@@ -12,3 +12,14 @@ struct SampleView: View {
         .frame(width: 30, height: 20)
     }
 }
+
+struct SampleView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            SampleView()
+                .background(Color.yellow)
+            SampleView()
+                .background(Color.green)
+        }
+    }
+}

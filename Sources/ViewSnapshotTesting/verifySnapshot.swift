@@ -1,6 +1,7 @@
 import XCTest
 import SwiftUI
 import UniformTypeIdentifiers
+@testable import PreviewGroup
 
 public func verifySnapshot<P>(_ preview: P.Type = P.self, _ name: String? = nil, colorAccuracy: Float = 0.02,
                               file: StaticString = #filePath, line: UInt = #line) where P: PreviewProvider {
@@ -9,6 +10,21 @@ public func verifySnapshot<P>(_ preview: P.Type = P.self, _ name: String? = nil,
     if name.hasSuffix(commonPreviewSuffix) {
         name.removeLast(commonPreviewSuffix.count)
     }
+    
+//    let f = preview.previews
+//    print(f)
+//    print(f.self)
+//    print(type(of: f))
+//    print(type(of: f.self))
+//    print(preview.previews)
+//    let mirror = Mirror(reflecting: f)
+//    let content = mirror.children.first!.value
+//    let mirror2 = Mirror(reflecting: content)
+//    let mirror3 = Mirror(reflecting: mirror2.children.first!.value)
+//    mirror3.children.makeIterator().forEach { child in
+//        print(child.label)
+//    }
+//    let iterView = ViewBuilder.buildEither(first: f)
     verifySnapshot(preview.previews, name, colorAccuracy: colorAccuracy, file: file, line: line)
 }
 
@@ -30,6 +46,22 @@ func ensureFolder(url: URL) throws {
 
 public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
                                        file: StaticString = #filePath, line: UInt = #line) {
+    let previewController = UIHostingController(rootView: view)
+    XCTAssertTrue(previewController.view.intrinsicContentSize.width < 8000,
+                  "view size: \(previewController.view.intrinsicContentSize) " +
+                  "is too large to take snapshot", file: file, line: line)
+    let viewName = name ?? "\(V.self)"
+    let elements = PreviewGroupRoot.elements
+    if !elements.isEmpty {
+        PreviewGroupRoot.elements = []
+        elements.enumerated().forEach {
+            verifySnapshot($0.element, viewName + ".\($0.offset + 1)",
+                           colorAccuracy:colorAccuracy,
+                           file: file,
+                           line: line)
+        }
+        return
+    }
     guard let pngData = try? inWindowView(view, block: {
         $0.renderHierarchyAsPNG()
     }) else {
@@ -38,7 +70,6 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
     }
     let isRunningOnCI = ProcessInfo.processInfo.environment.keys.contains("CI")
     let shouldOverwriteExpected = !isRunningOnCI
-    let viewName = name ?? "\(V.self)"
     let fileName = viewName + ".png"
     let url = folderUrl(String(describing: file)).appendingPathComponent(fileName)
     

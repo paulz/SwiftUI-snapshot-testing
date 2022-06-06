@@ -16,7 +16,7 @@ class SampleViewTest: XCTestCase {
                          options: options)
         // xctest warning:
         // [Snapshotting] Rendering a view that has not been committed to render server is not supported.
-        verifySnapshot(SampleView(), "SampleView-blank", colorAccuracy: 0)
+        verifySnapshot(SampleView_Previews.previews, "SampleView-blank", colorAccuracy: 0)
     }
     
     func testImageSizeIsScaledFromExpected() throws {
