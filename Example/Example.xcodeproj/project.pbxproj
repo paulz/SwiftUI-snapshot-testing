@@ -22,6 +22,7 @@
 		4B9C573F284DE2E8001DE13A /* PreviewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9C5728284DE251001DE13A /* PreviewGroup.swift */; };
 		4B9C5740284DE2E8001DE13A /* PreviewGroupRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9C572A284DE262001DE13A /* PreviewGroupRoot.swift */; };
 		4B9C5744284DE438001DE13A /* PreviewGroup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9C5734284DE2DF001DE13A /* PreviewGroup.framework */; };
+		4BEEBDAD284DEC6C00536554 /* SwiftUI_snapshot_test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +79,7 @@
 		4B058455283A66090027DAD5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4B058457283A660A0027DAD5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B05845A283A660A0027DAD5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		4B058460283A660A0027DAD5 /* ApplicationTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; name = ApplicationTests.xctest; path = Example.app/PlugIns/ApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B058460283A660A0027DAD5 /* ApplicationTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = file; path = ApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B058464283A660A0027DAD5 /* SnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTests.swift; sourceTree = "<group>"; };
 		4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUI_snapshot_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B058495283A67DD0027DAD5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -90,6 +91,7 @@
 		4B9C5728284DE251001DE13A /* PreviewGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreviewGroup.swift; path = ../../Sources/PreviewGroup/PreviewGroup.swift; sourceTree = "<group>"; };
 		4B9C572A284DE262001DE13A /* PreviewGroupRoot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreviewGroupRoot.swift; path = ../../Sources/PreviewGroup/Private/PreviewGroupRoot.swift; sourceTree = "<group>"; };
 		4B9C5734284DE2DF001DE13A /* PreviewGroup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PreviewGroup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BEEBDAC284DEB1700536554 /* workflows */ = {isa = PBXFileReference; lastKnownFileType = folder; name = workflows; path = ../.github/workflows; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BEEBDAD284DEC6C00536554 /* SwiftUI_snapshot_test.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +133,7 @@
 		4B058447283A66080027DAD5 = {
 			isa = PBXGroup;
 			children = (
+				4BEEBDAC284DEB1700536554 /* workflows */,
 				4B058452283A66090027DAD5 /* Example */,
 				4B058463283A660A0027DAD5 /* ApplicationTests */,
 				4B05849D283ADCA10027DAD5 /* SwiftUI-snapshot-test */,
