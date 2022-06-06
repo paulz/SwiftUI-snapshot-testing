@@ -19,19 +19,17 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "PreviewGroup",
-            dependencies: [],
-            path: "Sources/PreviewGroup"
-        ),
-        .target(
             name: "ViewSnapshotTesting",
             dependencies: [.target(name: "PreviewGroup")],
             path: "Sources/ViewSnapshotTesting",
-            linkerSettings: [.linkedFramework("XCTest",
-                                              .when(platforms: [.iOS,
-                                                                .macOS,
-                                                                .tvOS,
-                                                                .watchOS]))]
+            linkerSettings: [
+                .linkedFramework("XCTest", .when(platforms: [.iOS, .macOS]))
+            ]
+        ),
+        .target(
+            name: "PreviewGroup",
+            dependencies: [],
+            path: "Sources/PreviewGroup"
         ),
         .testTarget(
             name: "UnitTests",
