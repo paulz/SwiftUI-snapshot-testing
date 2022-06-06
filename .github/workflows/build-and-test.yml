@@ -13,7 +13,7 @@ jobs:
     runs-on: macos-12
     env:
       package: SwiftUI-snapshot-testing
-      destination: "platform=iOS Simulator,name=iPhone 11 Pro"
+      destination: name=iphone-12-pro
     steps:
     - uses: actions/checkout@v3
     - name: Setup Xcode version
@@ -25,6 +25,7 @@ jobs:
         swift --version
         swift package generate-xcodeproj
         xcodebuild -list
+        xcrun simctl create iphone-12-pro "iPhone 12 Pro"
     - name: Build
       uses: sersoft-gmbh/xcodebuild-action@master
       with:
