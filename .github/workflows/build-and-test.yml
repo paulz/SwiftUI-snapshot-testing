@@ -45,4 +45,14 @@ jobs:
         project: Example/Example.xcodeproj
         scheme: Example
         destination: ${{ env.destination }}
+        result-bundle-path: test-results/example-tests
         action: test
+    - name: Archive results # due to: https://github.com/actions/upload-artifact/issues/243
+      if: always()
+      run: zip -FSry results.zip test-results || true
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: results.zip

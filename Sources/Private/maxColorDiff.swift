@@ -2,6 +2,12 @@ import UIKit
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
+extension CIImage {
+    func settingAlphaOne() -> CIImage {
+        settingAlphaOne(in: extent)
+    }
+}
+
 func diff(_ old: UIImage, _ new: UIImage) -> UIImage {
     let differenceFilter = diff(
         old.cgImage!,
@@ -21,15 +27,15 @@ func diff(_ old: CGImage, _ new: CGImage) -> CICompositeOperation {
 
 func diff(_ old: CIImage, _ new: CIImage) -> CICompositeOperation {
     let differenceFilter: CICompositeOperation = CIFilter.differenceBlendMode()
-    differenceFilter.inputImage = old
-    differenceFilter.backgroundImage = new
+    differenceFilter.inputImage = old.settingAlphaOne()
+    differenceFilter.backgroundImage = new.settingAlphaOne()
     return differenceFilter
 }
 
 func histogramData(_ ciImage: CIImage) -> Data {
     let hist = CIFilter.areaHistogram()
     hist.inputImage = ciImage
-    hist.setValue(CIVector(cgRect: ciImage.extent), forKey: kCIInputExtentKey)
+    hist.extent = ciImage.extent
     return hist.value(forKey: "outputData") as! Data
 }
 
@@ -55,8 +61,25 @@ func histogram(ciImage: CIImage) -> [UInt32] {
 }
 
 func compare(_ left: UIImage, _ right: UIImage) -> ImageComparisonResult {
-    let image1 = CIImage(image: left)!
-    let image2 = CIImage(image: right)!
+    let image1 = CIImage(image: left)!.premultiplyingAlpha()
+    let image2 = CIImage(image: right)!.premultiplyingAlpha()
+    let diffOperation = diff(image1, image2)
+    return ImageComparisonResult(difference: diffOperation.outputImage!)
+}
+
+let workColorSpace = CGColorSpace(name: CGColorSpace.displayP3)!
+//let workColorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
+//let workColorSpace = CGColorSpace(name: CGColorSpace.extendedDisplayP3)!
+
+func compare(_ left: Data, _ right: Data) -> ImageComparisonResult {
+    let options: [CIImageOption : Any] = [
+        .colorSpace: workColorSpace,
+        .nearestSampling: NSNumber(booleanLiteral: true)
+    ]
+    let image1 = CIImage(data: left, options: options)!
+        .premultiplyingAlpha()
+    let image2 = CIImage(data: right, options: options)!
+        .premultiplyingAlpha()
     let diffOperation = diff(image1, image2)
     return ImageComparisonResult(difference: diffOperation.outputImage!)
 }

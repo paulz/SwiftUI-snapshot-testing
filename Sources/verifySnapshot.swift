@@ -30,18 +30,14 @@ func ensureFolder(url: URL) throws {
 
 public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
                                        file: StaticString = #filePath, line: UInt = #line) {
-    guard let image = try? inWindowView(view, block: {
-        $0.renderLayerAsBitmap()
+    guard let pngData = try? inWindowView(view, block: {
+        $0.renderHierarchyAsPNG()
     }) else {
         XCTFail("failed to get snapshot of view")
         return
     }
     let isRunningOnCI = ProcessInfo.processInfo.environment.keys.contains("CI")
     let shouldOverwriteExpected = !isRunningOnCI
-    guard let pngData = image.pngData() else {
-        XCTFail("failed to get image data")
-        return
-    }
     let viewName = name ?? "\(V.self)"
     let fileName = viewName + ".png"
     let url = folderUrl(String(describing: file)).appendingPathComponent(fileName)
@@ -53,13 +49,14 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
         }, onFailure, file: file, line: line)
     }
     
-    if let expectedData = try? Data(contentsOf: url), let expectedImage = UIImage(data: expectedData) {
+    if let expectedData = try? Data(contentsOf: url) {
         XCTContext.runActivity(named: viewName) {
             let actualImage = XCTAttachment(data: pngData, uniformTypeIdentifier: UTType.png.identifier)
             actualImage.name = "actual image"
             $0.add(actualImage)
-            let diff = compare(image, expectedImage)
-            if diff.maxColorDifference() > colorAccuracy {
+            let diff = compare(pngData, expectedData)
+            let actualDifference = diff.maxColorDifference()
+            if actualDifference > colorAccuracy {
                 if shouldOverwriteExpected {
                     writeActual(onFailure: "failed to record actual image")
                 }
@@ -74,11 +71,18 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
                 )
             }
             let ciImage = diff.difference
-            guard let diffImage = CIContext().createCGImage(ciImage, from: ciImage.extent) else {
-                XCTFail("failed to get image of difference")
-                return
-            }
-            let diffAttachment = XCTAttachment(image: UIImage(cgImage: diffImage))
+            let context = CIContext(options: [
+                .workingColorSpace : workColorSpace,
+                .allowLowPower: NSNumber(booleanLiteral: false),
+                .highQualityDownsample: NSNumber(booleanLiteral: true),
+                .outputColorSpace: workColorSpace,
+                .useSoftwareRenderer: NSNumber(booleanLiteral: true),
+                .cacheIntermediates: NSNumber(booleanLiteral: false),
+                .priorityRequestLow: NSNumber(booleanLiteral: false),
+                .name: "difference"
+            ])
+            let data = context.pngRepresentation(of: ciImage.premultiplyingAlpha(), format: .RGBA8, colorSpace: workColorSpace)!
+            let diffAttachment = XCTAttachment(data: data, uniformTypeIdentifier: UTType.png.identifier)
             diffAttachment.name = "difference"
             $0.add(diffAttachment)
         }
@@ -107,7 +111,7 @@ func folderUrl(_ filePath: String = #filePath) -> URL {
  see: https://github.com/paulz/SwiftUI-snapshot-testing/issues/11
  */
 func allowAppearanceTransition() {
-    RunLoop.current.run(until: .init(timeIntervalSinceNow: 0))
+    RunLoop.current.run(until: .init(timeIntervalSinceNow: 0.01))
 }
 
 func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) -> T) throws -> T {
@@ -127,8 +131,10 @@ func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) -> T) throws -> 
     if size == .zero {
         size = layoutFrame.size
     }
+    view.backgroundColor = .clear
     let safeOrigin = layoutFrame.origin
     rootController.addChild(controller)
+    allowAppearanceTransition()
     view.frame = .init(origin: safeOrigin, size: size)
     rootController.view.addSubview(controller.view)
     view.frame = .init(origin: safeOrigin, size: size)
@@ -136,6 +142,7 @@ func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) -> T) throws -> 
     defer {
         view.removeFromSuperview()
         controller.removeFromParent()
+        allowAppearanceTransition()
     }
     return block(view)
 }
