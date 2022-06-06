@@ -11,20 +11,6 @@ public func verifySnapshot<P>(_ preview: P.Type = P.self, _ name: String? = nil,
         name.removeLast(commonPreviewSuffix.count)
     }
     
-//    let f = preview.previews
-//    print(f)
-//    print(f.self)
-//    print(type(of: f))
-//    print(type(of: f.self))
-//    print(preview.previews)
-//    let mirror = Mirror(reflecting: f)
-//    let content = mirror.children.first!.value
-//    let mirror2 = Mirror(reflecting: content)
-//    let mirror3 = Mirror(reflecting: mirror2.children.first!.value)
-//    mirror3.children.makeIterator().forEach { child in
-//        print(child.label)
-//    }
-//    let iterView = ViewBuilder.buildEither(first: f)
     verifySnapshot(preview.previews, name, colorAccuracy: colorAccuracy, file: file, line: line)
 }
 

@@ -208,7 +208,8 @@
 				4B9C5728284DE251001DE13A /* PreviewGroup.swift */,
 				4B9C572A284DE262001DE13A /* PreviewGroupRoot.swift */,
 			);
-			path = PreviewGroup;
+			name = PreviewGroup;
+			path = ../Sources/PreviewGroup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
