@@ -118,7 +118,15 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
     }
 }
 
+public struct SnapshotsConfiguration {
+    public var folderUrl: URL? = nil
+}
+
+public var snapshotsConfiguration = SnapshotsConfiguration()
+
 func folderUrl(_ filePath: String = #filePath) -> URL {
+    snapshotsConfiguration.folderUrl
+    ??
     URL(fileURLWithPath: filePath)
         .deletingLastPathComponent()
         .appendingPathComponent("Snapshots")
