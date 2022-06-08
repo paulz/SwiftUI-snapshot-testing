@@ -48,6 +48,8 @@ extension UIView {
         context.cgContext.setShouldSubpixelPositionFonts(false)
         context.cgContext.setShouldSmoothFonts(false)
         context.cgContext.setAllowsFontSubpixelQuantization(false)
+        context.cgContext.setRenderingIntent(.absoluteColorimetric)
+        context.cgContext.interpolationQuality = .high
         context.cgContext.setShouldSubpixelQuantizeFonts(false)
     }
 
