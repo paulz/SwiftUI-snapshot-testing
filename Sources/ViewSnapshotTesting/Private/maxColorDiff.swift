@@ -67,7 +67,7 @@ func compare(_ left: UIImage, _ right: UIImage) -> ImageComparisonResult {
     return ImageComparisonResult(difference: diffOperation.outputImage!)
 }
 
-let workColorSpace = CGColorSpace(name: CGColorSpace.displayP3)!
+let workColorSpace = CGColorSpace(name: CGColorSpace.extendedDisplayP3)!
 //let workColorSpace = CGColorSpace(name: CGColorSpace.extendedSRGB)!
 //let workColorSpace = CGColorSpace(name: CGColorSpace.extendedDisplayP3)!
 
@@ -80,6 +80,7 @@ func compare(_ left: Data, _ right: Data) -> ImageComparisonResult {
         .premultiplyingAlpha()
     let image2 = CIImage(data: right, options: options)!
         .premultiplyingAlpha()
+    // check if already premultiplied // image2.debugDescription
     let diffOperation = diff(image1, image2)
     return ImageComparisonResult(difference: diffOperation.outputImage!)
 }

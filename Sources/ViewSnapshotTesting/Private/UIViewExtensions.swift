@@ -52,6 +52,7 @@ extension UIView {
     }
 
     func renderHierarchyAsPNG() -> Data {
+        // try use image instead of PNG
         renderer().pngData(actions: drawHierarchyActions(_:))
     }
     
