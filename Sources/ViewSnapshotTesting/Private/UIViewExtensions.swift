@@ -42,8 +42,8 @@ extension UIView {
     
     func configureContext(_ context: UIGraphicsImageRendererContext) {
         context.cgContext.setFlatness(0.01)
-        context.cgContext.setShouldAntialias(false)
-        context.cgContext.setAllowsAntialiasing(false)
+        context.cgContext.setShouldAntialias(true)
+        context.cgContext.setAllowsAntialiasing(true)
         context.cgContext.setAllowsFontSubpixelPositioning(false)
         context.cgContext.setShouldSubpixelPositionFonts(false)
         context.cgContext.setShouldSmoothFonts(false)
@@ -56,12 +56,78 @@ extension UIView {
     }
     
     func drawHierarchyActions(_ context: UIGraphicsImageRendererContext) {
-        configureContext(context)
-        XCTAssertTrue(drawHierarchy(in: bounds, afterScreenUpdates: true),
-                      "unable to take snapshot of the view")
+//        configureContext(context)
+//        print("drawHierarchyActions", self)
+//        changeDelegate {
+//        layer.presentation()?.render(in: context.cgContext)
+//        layer.allowsGroupOpacity = true
+//        layer.allowsEdgeAntialiasing = true
+        context.cgContext.interpolationQuality = .high
+        context.cgContext.resetClip()
+//        layer.layoutSublayers()
+        setNeedsLayout()
+        RunLoop.current.run(until: .init(timeIntervalSinceNow: 0.01))
+        setNeedsDisplay()
+        RunLoop.current.run(until: .init(timeIntervalSinceNow: 0.01))
+        XCTAssertNil(layer.backgroundFilters)
+        XCTAssertNil(layer.filters)
+        XCTAssertNil(layer.compositingFilter)
+        XCTAssertNil(layer.sublayers)
+//        layer.draw(in: context.cgContext)
+//        layer.display()
+        layer.setNeedsLayout()
+        RunLoop.current.run(until: .init(timeIntervalSinceNow: 0.01))
+        layer.setNeedsDisplay()
+        RunLoop.current.run(until: .init(timeIntervalSinceNow: 0.01))
+        let data = try! NSKeyedArchiver.archivedData(withRootObject: layer, requiringSecureCoding: false)
+        print(data)
+        layer.render(in: context.cgContext)
+//            drawHierarchy(in: bounds, afterScreenUpdates: true)
+//            XCTAssertTrue(drawHierarchy(in: bounds, afterScreenUpdates: true),
+//                          "unable to take snapshot of the view")
+//        }
+    }
+    
+    func changeDelegate(block: ()->Void) {
+        let previous = layer.delegate!
+        let inspector = Inspector(parent: self)
+        layer.delegate = inspector
+        block()
+        layer.delegate = previous
     }
     
     func renderHierarchyOnScreen() -> UIImage {
         renderer().image(actions: drawHierarchyActions(_:))
+    }
+}
+
+class Inspector: NSObject {
+    let parent: CALayerDelegate
+    init(parent: CALayerDelegate) {
+        self.parent = parent
+        super.init()
+    }
+}
+
+
+
+extension Inspector: CALayerDelegate {
+    override func forwardingTarget(for aSelector: Selector!) -> Any? {
+        parent
+    }
+//    func display(_ layer: CALayer) {
+//        parent.display?(layer)
+//    }
+    func draw(_ layer: CALayer, in ctx: CGContext) {
+        parent.draw?(layer, in: ctx)
+    }
+    func layerWillDraw(_ layer: CALayer) {
+        parent.layerWillDraw?(layer)
+    }
+    func layoutSublayers(of layer: CALayer) {
+        parent.layoutSublayers?(of: layer)
+    }
+    func action(for layer: CALayer, forKey event: String) -> CAAction? {
+        parent.action?(for: layer, forKey: event)
     }
 }

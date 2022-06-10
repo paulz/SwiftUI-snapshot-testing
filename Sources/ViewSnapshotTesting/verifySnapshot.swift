@@ -30,6 +30,15 @@ func ensureFolder(url: URL) throws {
                          withIntermediateDirectories: true)
 }
 
+func archive(view:UIView, name: String, file: String) {
+//    let viewData = try! NSKeyedArchiver.archivedData(withRootObject: view, requiringSecureCoding: false)
+    let url = folderUrl(file)
+//    try! viewData.write(to: url.appendingPathComponent(name + "-view.plist"))
+    let caar = ["rootLayer": view.layer]
+    let layerData = try! NSKeyedArchiver.archivedData(withRootObject: caar, requiringSecureCoding: false)
+    try! layerData.write(to: url.appendingPathComponent(name + "-layer.caar"))
+}
+
 public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
                                        file: StaticString = #filePath, line: UInt = #line) {
     let previewController = UIHostingController(rootView: view)
@@ -48,8 +57,10 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
         }
         return
     }
-    guard let pngData = try? inWindowView(view, block: {
-        $0.renderHierarchyAsPNG()
+    guard let pngData = try? inWindowView(view, block: { (someView: UIView)->Data in
+        let data = someView.renderHierarchyAsPNG()
+        archive(view: someView, name: viewName, file:file.description)
+        return data
     }) else {
         XCTFail("failed to get snapshot of view")
         return
