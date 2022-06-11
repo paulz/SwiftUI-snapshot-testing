@@ -87,21 +87,23 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
                     file: file, line: line
                 )
             }
-            let ciImage = diff.difference
-            let context = CIContext(options: [
-                .workingColorSpace : workColorSpace,
-                .allowLowPower: NSNumber(booleanLiteral: false),
-                .highQualityDownsample: NSNumber(booleanLiteral: true),
-                .outputColorSpace: workColorSpace,
-                .useSoftwareRenderer: NSNumber(booleanLiteral: true),
-                .cacheIntermediates: NSNumber(booleanLiteral: false),
-                .priorityRequestLow: NSNumber(booleanLiteral: false),
-                .name: "difference"
-            ])
-            let data = context.pngRepresentation(of: ciImage.premultiplyingAlpha(), format: .RGBA8, colorSpace: workColorSpace)!
-            let diffAttachment = XCTAttachment(data: data, uniformTypeIdentifier: UTType.png.identifier)
-            diffAttachment.name = "difference"
-            $0.add(diffAttachment)
+            if actualDifference > 0 {
+                let ciImage = diff.difference.premultiplyingAlpha().adjustExposure(amount: actualDifference)
+                let context = CIContext(options: [
+                    .workingColorSpace : workColorSpace,
+                    .allowLowPower: NSNumber(booleanLiteral: false),
+                    .highQualityDownsample: NSNumber(booleanLiteral: true),
+                    .outputColorSpace: workColorSpace,
+                    .useSoftwareRenderer: NSNumber(booleanLiteral: true),
+                    .cacheIntermediates: NSNumber(booleanLiteral: false),
+                    .priorityRequestLow: NSNumber(booleanLiteral: false),
+                    .name: "difference"
+                ])
+                let data = context.pngRepresentation(of: ciImage, format: .RGBA8, colorSpace: workColorSpace)!
+                let diffAttachment = XCTAttachment(data: data, uniformTypeIdentifier: UTType.png.identifier)
+                diffAttachment.name = "difference"
+                $0.add(diffAttachment)
+            }
         }
     } else {
         if shouldOverwriteExpected {

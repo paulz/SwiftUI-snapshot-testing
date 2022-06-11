@@ -17,6 +17,7 @@
 		4B0584A2283ADCD80027DAD5 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05849F283ADCB00027DAD5 /* UIViewExtensions.swift */; };
 		4B0584A3283ADCD80027DAD5 /* verifySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0584A0283ADCB00027DAD5 /* verifySnapshot.swift */; };
 		4B0584A5283ADFBF0027DAD5 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0584A4283ADFBF0027DAD5 /* FavoriteView.swift */; };
+		4B77755928547AC60044E2BC /* CIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B77755828547AC60044E2BC /* CIImage+Extensions.swift */; };
 		4B9C573A284DE2DF001DE13A /* PreviewGroup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9C5734284DE2DF001DE13A /* PreviewGroup.framework */; };
 		4B9C573B284DE2DF001DE13A /* PreviewGroup.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9C5734284DE2DF001DE13A /* PreviewGroup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B9C573F284DE2E8001DE13A /* PreviewGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9C5728284DE251001DE13A /* PreviewGroup.swift */; };
@@ -88,6 +89,7 @@
 		4B05849F283ADCB00027DAD5 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = ../Sources/ViewSnapshotTesting/Private/UIViewExtensions.swift; sourceTree = "<group>"; };
 		4B0584A0283ADCB00027DAD5 /* verifySnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = verifySnapshot.swift; path = ../Sources/ViewSnapshotTesting/verifySnapshot.swift; sourceTree = "<group>"; };
 		4B0584A4283ADFBF0027DAD5 /* FavoriteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
+		4B77755828547AC60044E2BC /* CIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CIImage+Extensions.swift"; path = "../Sources/ViewSnapshotTesting/Private/CIImage+Extensions.swift"; sourceTree = "<group>"; };
 		4B9C5728284DE251001DE13A /* PreviewGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreviewGroup.swift; path = ../../Sources/PreviewGroup/PreviewGroup.swift; sourceTree = "<group>"; };
 		4B9C572A284DE262001DE13A /* PreviewGroupRoot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreviewGroupRoot.swift; path = ../../Sources/PreviewGroup/Private/PreviewGroupRoot.swift; sourceTree = "<group>"; };
 		4B9C5734284DE2DF001DE13A /* PreviewGroup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PreviewGroup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -196,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				4B05849E283ADCB00027DAD5 /* maxColorDiff.swift */,
+				4B77755828547AC60044E2BC /* CIImage+Extensions.swift */,
 				4B05849F283ADCB00027DAD5 /* UIViewExtensions.swift */,
 				4B0584A0283ADCB00027DAD5 /* verifySnapshot.swift */,
 			);
@@ -411,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B0584A3283ADCD80027DAD5 /* verifySnapshot.swift in Sources */,
+				4B77755928547AC60044E2BC /* CIImage+Extensions.swift in Sources */,
 				4B0584A2283ADCD80027DAD5 /* UIViewExtensions.swift in Sources */,
 				4B0584A1283ADCD80027DAD5 /* maxColorDiff.swift in Sources */,
 			);
