@@ -3,6 +3,15 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 
 extension CIImage {
+    func removeTransparency() -> CIImage {
+        addWhiteBackground().settingAlphaOne()
+    }
+    func addWhiteBackground() -> CIImage {
+        let filter = CIFilter.sourceOverCompositing()
+        filter.backgroundImage = .init(color: .white).cropped(to: extent)
+        filter.inputImage = self
+        return filter.outputImage!
+    }
     func settingAlphaOne() -> CIImage {
         settingAlphaOne(in: extent)
     }
@@ -27,8 +36,8 @@ func diff(_ old: CGImage, _ new: CGImage) -> CICompositeOperation {
 
 func diff(_ old: CIImage, _ new: CIImage) -> CICompositeOperation {
     let differenceFilter: CICompositeOperation = CIFilter.differenceBlendMode()
-    differenceFilter.inputImage = old.settingAlphaOne()
-    differenceFilter.backgroundImage = new.settingAlphaOne()
+    differenceFilter.inputImage = old.removeTransparency()
+    differenceFilter.backgroundImage = new.removeTransparency()
     return differenceFilter
 }
 
