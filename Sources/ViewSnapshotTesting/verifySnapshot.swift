@@ -141,7 +141,7 @@ func allowAppearanceTransition() {
     RunLoop.current.run(until: .init(timeIntervalSinceNow: 0.01))
 }
 
-func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) -> T) throws -> T {
+func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) throws -> T) throws -> T {
 //    let window = UIApplication.shared.value(forKey: "keyWindow") as! UIWindow
 //    let rootController = window.rootViewController!
 
@@ -171,5 +171,5 @@ func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) -> T) throws -> 
         controller.removeFromParent()
         allowAppearanceTransition()
     }
-    return block(view)
+    return try block(view)
 }
