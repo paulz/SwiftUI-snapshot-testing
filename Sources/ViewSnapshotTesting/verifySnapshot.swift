@@ -3,8 +3,11 @@ import SwiftUI
 import UniformTypeIdentifiers
 @testable import PreviewGroup
 
-public func verifySnapshot<P>(_ preview: P.Type = P.self, _ name: String? = nil, colorAccuracy: Float = 0.02,
-                              file: StaticString = #filePath, line: UInt = #line) where P: PreviewProvider {
+public func verifySnapshot<P>(_ preview: P.Type = P.self,
+                              _ name: String? = nil,
+                              colorAccuracy: Float = snapshotsConfiguration.colorAccuracy,
+                              file: StaticString = #filePath,
+                              line: UInt = #line) where P: PreviewProvider {
     var name = name ?? "\(P.self)"
     let commonPreviewSuffix = "_Previews"
     if name.hasSuffix(commonPreviewSuffix) {
