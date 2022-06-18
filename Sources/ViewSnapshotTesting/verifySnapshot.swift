@@ -138,21 +138,18 @@ func allowAppearanceTransition() {
     RunLoop.current.run(until: .init(timeIntervalSinceNow: 0.01))
 }
 
-func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) throws -> T) throws -> T {
-//    let window = UIApplication.shared.value(forKey: "keyWindow") as! UIWindow
-//    let rootController = window.rootViewController!
-
+func inWindowView<T>(_ controller: UIViewController, block: (UIView) throws -> T) throws -> T {
     let window = UIWindow()
     window.makeKeyAndVisible()
     let rootController = UIViewController()
     window.rootViewController = rootController
-
     allowAppearanceTransition()
-    let controller = UIHostingController(rootView: swiftUIView)
+
     let view = try XCTUnwrap(controller.view)
+    
     let layoutFrame = rootController.view.safeAreaLayoutGuide.layoutFrame
     var size = view.intrinsicContentSize
-    if size == .zero {
+    if size == .zero || size == .init(width: -1, height: -1) {
         size = layoutFrame.size
     }
     view.backgroundColor = .clear
@@ -169,4 +166,8 @@ func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) throws -> T) thr
         allowAppearanceTransition()
     }
     return try block(view)
+}
+
+func inWindowView<V: View, T>(_ swiftUIView: V, block: (UIView) throws -> T) throws -> T {
+    try inWindowView(UIHostingController(rootView: swiftUIView), block: block)
 }
