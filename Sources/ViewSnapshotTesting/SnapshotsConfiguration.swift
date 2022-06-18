@@ -21,8 +21,8 @@ public struct SnapshotsConfiguration {
     public static func useSnapshots<T>(bundledWith aClass: T.Type = T.self) where T: AnyObject {
         resource(bundle: Bundle(for: aClass))
     }
-    public static func useSnapshots<T>(bundledWith aClass: T) where T: AnyObject {
-        useSnapshots(bundledWith: T.self)
+    public static func useSnapshots<T>(bundledWith anObject: T) where T: AnyObject {
+        useSnapshots(bundledWith: type(of: anObject))
     }
 }
 
