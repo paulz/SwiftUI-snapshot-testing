@@ -33,13 +33,21 @@ func ensureFolder(url: URL) throws {
                          withIntermediateDirectories: true)
 }
 
+func viewNameWithoutModifiers<V>(type: V.Type = V.self) -> String {
+    "\(type)"
+        .components(separatedBy: ",").first!
+        .components(separatedBy: "<").last!
+        .trimmingCharacters(in: .punctuationCharacters)
+        .trimmingCharacters(in: .symbols)
+}
+
 public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
                                        file: StaticString = #filePath, line: UInt = #line) {
     let previewController = UIHostingController(rootView: view)
     XCTAssertTrue(previewController.view.intrinsicContentSize.width < 8000,
                   "view size: \(previewController.view.intrinsicContentSize) " +
                   "is too large to take snapshot", file: file, line: line)
-    let viewName = name ?? "\(V.self)"
+    let viewName = name ?? viewNameWithoutModifiers(type: V.self)
     let elements = PreviewGroupRoot.elements
     if !elements.isEmpty {
         PreviewGroupRoot.elements = []

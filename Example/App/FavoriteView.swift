@@ -24,8 +24,8 @@ struct FavoriteView: View {
 }
 
 
-struct FavoriteView_Previews: PreviewProvider {
-    static var previews: some View {
+public struct FavoriteView_Previews: PreviewProvider {
+    public static var previews: some View {
         PreviewGroup {
             FavoriteView()
             FavoriteView()
