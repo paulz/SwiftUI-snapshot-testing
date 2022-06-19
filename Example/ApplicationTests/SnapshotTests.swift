@@ -1,5 +1,5 @@
 import XCTest
-import Example
+@testable import Example
 import SwiftUI_snapshot_test
 import SwiftUI
 

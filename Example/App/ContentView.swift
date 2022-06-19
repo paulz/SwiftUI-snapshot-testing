@@ -14,8 +14,8 @@ struct ContentView: View {
     }
 }
 
-public struct ContentView_Previews: PreviewProvider {
-    public static var previews: some View {
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
         ContentView()
             .previewLayout(.sizeThatFits)
     }
