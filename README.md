@@ -11,7 +11,9 @@ This allows simple snapshot tests for SwiftUI views and previews.
 
 ## Installation
 
-Add Swift Package to a project Test target
+Add Swift Package, add `SwiftUI_SnapshotTesting` to a project **Test** target.
+
+Optionally add `PreviewGroup` to the app target, see [Preview Group](https://github.com/paulz/SwiftUI-snapshot-testing/wiki/Preview-Group)
 
 ## Example
 
@@ -22,3 +24,5 @@ See [Example iOS app](https://github.com/paulz/SwiftUI-snapshot-testing/tree/mai
         verifySnapshot(ContentView())
         verifySnapshot(Text("SwiftUI").foregroundColor(.red), "example")
     }
+
+## Documentation is on [Wiki](https://github.com/paulz/SwiftUI-snapshot-testing/wiki/)
