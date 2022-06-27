@@ -17,6 +17,9 @@ let package = Package(
             name: "SnapshotTestingPreviewGroup",
             targets: ["PreviewGroup"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/paulz/HRCoder", .upToNextMajor(from: Version(2, 0, 0)))
+    ],
     targets: [
         .target(
             name: "ViewSnapshotTesting",
