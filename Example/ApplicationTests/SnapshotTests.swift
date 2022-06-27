@@ -6,12 +6,14 @@ import SwiftUI
 
 class SnapshotTests: XCTestCase {
     func testViews() throws {
-        verifySnapshot(FavoriteView_Previews.self, colorAccuracy: 0.05)
-        verifySnapshot(SimpleView())
-        verifySnapshot(Text("SwiftUI").foregroundColor(.red), "example", colorAccuracy: 0)
+        SnapshotsConfiguration.withColorAccuracy(0) {
+            verifySnapshot(FavoriteView_Previews.self)
+            verifySnapshot(SimpleView())
+            verifySnapshot(Text("SwiftUI").foregroundColor(.red), "example")
+        }
     }
     func testDefaultNameShouldNotIncludeModifiers() {
-        verifySnapshot(ContentView_Previews.previews, colorAccuracy: 0)
+        verifySnapshot(ContentView_Previews.previews)
     }
 }
 
