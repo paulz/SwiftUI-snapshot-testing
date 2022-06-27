@@ -23,7 +23,10 @@ let package = Package(
     targets: [
         .target(
             name: "ViewSnapshotTesting",
-            dependencies: [.target(name: "PreviewGroup")],
+            dependencies: [
+                .target(name: "PreviewGroup"),
+                .byName(name: "HRCoder")
+            ],
             path: "Sources/ViewSnapshotTesting",
             linkerSettings: [
                 .linkedFramework("XCTest", .when(platforms: [.iOS, .macOS]))

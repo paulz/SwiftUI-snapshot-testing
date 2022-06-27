@@ -2,6 +2,7 @@ import XCTest
 import SwiftUI
 import UniformTypeIdentifiers
 @testable import PreviewGroup
+import HRCoder
 
 public func verifySnapshot<P>(_ preview: P.Type = P.self,
                               _ name: String? = nil,
@@ -41,8 +42,11 @@ func viewNameWithoutModifiers<V>(type: V.Type = V.self) -> String {
         .trimmingCharacters(in: .symbols)
 }
 
-public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccuracy: Float = 0.02,
-                                       file: StaticString = #filePath, line: UInt = #line) {
+public func verifySnapshot<V: View>(_ view: V,
+                                    _ name: String? = nil,
+                                    colorAccuracy: Float = snapshotsConfiguration.colorAccuracy,
+                                    file: StaticString = #filePath,
+                                    line: UInt = #line) {
     let previewController = UIHostingController(rootView: view)
     XCTAssertTrue(previewController.view.intrinsicContentSize.width < 8000,
                   "view size: \(previewController.view.intrinsicContentSize) " +
@@ -59,32 +63,80 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
         }
         return
     }
-    guard let pngData = try? inWindowView(view, block: {
-        $0.renderHierarchyAsPNG()
+    var layer: CALayer = .init()
+    guard let pngData = try? inWindowView(view, block: { (uiView: UIView) -> Data in
+        let png = uiView.renderHierarchyAsPNG()
+        layer = uiView.layer
+        return png
     }) else {
         XCTFail("failed to get snapshot of view")
         return
     }
+    func getHumanJson() throws -> NSDictionary {
+        try XCTUnwrap(
+            HRCoder.archivedJSON(
+                withRootObject: layer
+            ) as? NSDictionary
+        )
+    }
+    
+    func getHumanJsonData() throws -> Data {
+        try JSONSerialization.data(
+            withJSONObject: getHumanJson(),
+            options: [.prettyPrinted, .sortedKeys]
+        )
+    }
+
     let isRunningOnCI = ProcessInfo.processInfo.environment.keys.contains("CI")
     let shouldOverwriteExpected = !isRunningOnCI
     let fileName = viewName + ".png"
-    let url = folderUrl(String(describing: file)).appendingPathComponent(fileName)
+    let folderUrl = folderUrl(String(describing: file))
     
+    let snapshotUrl = folderUrl.appendingPathComponent(fileName)
+    if snapshotsConfiguration.useLayers {
+        let layerFolderUrl = folderUrl.appendingPathComponent(".layers")
+        let layerFileName = viewName + ".json"
+        let layerJsonUrl = layerFolderUrl.appendingPathComponent(layerFileName)
+        let actualJsonData = try! getHumanJsonData()
+        
+        func writeActualLayer(onFailure: String) {
+            assertNoThrow({
+                try ensureFolder(url: layerJsonUrl)
+                try actualJsonData.write(to: layerJsonUrl)
+            }, onFailure, file: file, line: line)
+        }
+
+
+        if let expectedLayerData = try? Data(contentsOf: layerJsonUrl) {
+            XCTAssertEqual(expectedLayerData, actualJsonData, "view layer data is diffent")
+        } else {
+            if shouldOverwriteExpected {
+                XCTContext.runActivity(named: "recording missing layer") {
+                    $0.add(.init(data: actualJsonData, uniformTypeIdentifier: UTType.json.identifier))
+                    writeActualLayer(onFailure: "failed to record missing layer")
+                }
+                XCTFail("was missing layer: \(layerFileName), now recorded at: \(layerJsonUrl.path)", file: file, line: line)
+            } else {
+                XCTFail("missing layer: \(layerFileName), not recording on CI", file: file, line: line)
+            }
+        }
+    }
+
     func writeActual(onFailure: String) {
         assertNoThrow({
-            try ensureFolder(url: url)
-            try pngData.write(to: url)
+            try ensureFolder(url: snapshotUrl)
+            try pngData.write(to: snapshotUrl)
         }, onFailure, file: file, line: line)
     }
     
-    if let expectedData = try? Data(contentsOf: url) {
+    if let expectedData = try? Data(contentsOf: snapshotUrl) {
         XCTContext.runActivity(named: viewName) {
             let actualImage = XCTAttachment(data: pngData, uniformTypeIdentifier: UTType.png.identifier)
             actualImage.name = "actual image"
             $0.add(actualImage)
             let diff = compare(pngData, expectedData)
             let actualDifference = diff.maxColorDifference()
-            if actualDifference > colorAccuracy {
+            if actualDifference > colorAccuracy, snapshotsConfiguration.useLayers == false {
                 if shouldOverwriteExpected {
                     writeActual(onFailure: "failed to record actual image")
                 }
@@ -122,7 +174,7 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
                 $0.add(.init(data: pngData, uniformTypeIdentifier: UTType.png.identifier))
                 writeActual(onFailure: "failed to record missing snapshot")
             }
-            XCTFail("was missing snapshot: \(fileName), now recorded at: \(url.path)", file: file, line: line)
+            XCTFail("was missing snapshot: \(fileName), now recorded at: \(snapshotUrl.path)", file: file, line: line)
         } else {
             XCTFail("missing snapshot: \(fileName), not recording on CI", file: file, line: line)
         }

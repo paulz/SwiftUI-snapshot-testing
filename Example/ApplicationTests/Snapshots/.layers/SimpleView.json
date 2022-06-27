@@ -1,0 +1,144 @@
+{
+  "__CACodingContents" : [
+    "allowsEdgeAntialiasing",
+    "allowsGroupBlending",
+    "allowsGroupOpacity",
+    "backgroundColor",
+    "bounds",
+    "contentsFormat",
+    "delegate",
+    "name",
+    "needsDisplayOnBoundsChange",
+    "needsLayoutOnGeometryChange",
+    "opaque",
+    "position",
+    "securityMode",
+    "sublayers"
+  ],
+  "$class" : "CALayer",
+  "allowsEdgeAntialiasing" : false,
+  "allowsGroupBlending" : false,
+  "allowsGroupOpacity" : false,
+  "backgroundColor" : {
+    "$class" : "LKCGColorCodingProxy",
+    "a" : 0,
+    "b" : 0,
+    "g" : 0,
+    "r" : 0
+  },
+  "bounds" : {
+    "$class" : "LKNSValueCodingProxy",
+    "height" : 52.333332061767578,
+    "kind" : 2,
+    "width" : 120,
+    "x" : 0,
+    "y" : 0
+  },
+  "contentsFormat" : "RGBA8",
+  "name" : "VC:_TtGC7SwiftUI19UIHostingControllerV16ApplicationTests10SimpleView_",
+  "needsDisplayOnBoundsChange" : false,
+  "needsLayoutOnGeometryChange" : true,
+  "opaque" : false,
+  "position" : {
+    "$class" : "LKNSValueCodingProxy",
+    "kind" : 0,
+    "x" : 60,
+    "y" : 73.166664123535156
+  },
+  "securityMode" : "insecure",
+  "sublayers" : {
+    "$class" : "LKNSArrayCodingProxy",
+    "array" : [
+      {
+        "__CACodingContents" : [
+          "allowsEdgeAntialiasing",
+          "allowsGroupOpacity",
+          "anchorPoint",
+          "backgroundColor",
+          "bounds",
+          "contentsFormat",
+          "delegate",
+          "opaque",
+          "position"
+        ],
+        "$class" : "CALayer",
+        "allowsEdgeAntialiasing" : false,
+        "allowsGroupOpacity" : true,
+        "anchorPoint" : {
+          "$class" : "LKNSValueCodingProxy",
+          "kind" : 0,
+          "x" : 0,
+          "y" : 0
+        },
+        "backgroundColor" : {
+          "$class" : "LKCGColorCodingProxy",
+          "a" : 1,
+          "b" : 0.83921575546264648,
+          "g" : 0.33725488185882568,
+          "r" : 0.34509801864624023
+        },
+        "bounds" : {
+          "$class" : "LKNSValueCodingProxy",
+          "height" : 20.333333969116211,
+          "kind" : 2,
+          "width" : 88,
+          "x" : 0,
+          "y" : 0
+        },
+        "contentsFormat" : "RGBA8",
+        "opaque" : true,
+        "position" : {
+          "$class" : "LKNSValueCodingProxy",
+          "kind" : 0,
+          "x" : 16,
+          "y" : 16
+        }
+      },
+      {
+        "__CACodingContents" : [
+          "allowsEdgeAntialiasing",
+          "allowsGroupOpacity",
+          "anchorPoint",
+          "bounds",
+          "contentsFormat",
+          "contentsGravity",
+          "contentsScale",
+          "delegate",
+          "needsDisplayOnBoundsChange",
+          "opaque",
+          "position",
+          "rasterizationScale"
+        ],
+        "$class" : "CALayer",
+        "allowsEdgeAntialiasing" : false,
+        "allowsGroupOpacity" : true,
+        "anchorPoint" : {
+          "$class" : "LKNSValueCodingProxy",
+          "kind" : 0,
+          "x" : 0,
+          "y" : 0
+        },
+        "bounds" : {
+          "$class" : "LKNSValueCodingProxy",
+          "height" : 20.333333969116211,
+          "kind" : 2,
+          "width" : 88,
+          "x" : 0,
+          "y" : 0
+        },
+        "contentsFormat" : "Automatic",
+        "contentsGravity" : "bottomLeft",
+        "contentsScale" : 3,
+        "needsDisplayOnBoundsChange" : false,
+        "opaque" : false,
+        "position" : {
+          "$class" : "LKNSValueCodingProxy",
+          "kind" : 0,
+          "x" : 16,
+          "y" : 16
+        },
+        "rasterizationScale" : 3
+      }
+    ]
+  }
+}
