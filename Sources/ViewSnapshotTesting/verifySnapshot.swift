@@ -106,9 +106,25 @@ public func verifySnapshot<V: View>(_ view: V,
             }, onFailure, file: file, line: line)
         }
 
-
         if let expectedLayerData = try? Data(contentsOf: layerJsonUrl) {
-            XCTAssertEqual(expectedLayerData, actualJsonData, "view layer data is diffent")
+            XCTContext.runActivity(named: viewName + " layers") {
+                if expectedLayerData != actualJsonData {
+                    XCTFail(
+                        """
+                        view layer did not match snapshot: \(viewName)
+                        see attached `layer` JSON representation
+                        """,
+                        file: file, line: line
+                    )
+                    let layerAttachment = XCTAttachment(data: actualJsonData, uniformTypeIdentifier: UTType.json.identifier)
+                    layerAttachment.name = "layer"
+                    $0.add(layerAttachment)
+                    if shouldOverwriteExpected {
+                        writeActual(onFailure: "failed to record actual snapshot image")
+                        writeActualLayer(onFailure: "failed to record view layers")
+                    }
+                }
+            }
         } else {
             if shouldOverwriteExpected {
                 XCTContext.runActivity(named: "recording missing layer") {
