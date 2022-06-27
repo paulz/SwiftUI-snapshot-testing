@@ -90,7 +90,7 @@ public func verifySnapshot<V: View>(_ view: V, _ name: String? = nil, colorAccur
                 }
                 XCTFail(
                     """
-                    view did not match snapshot
+                    view did not match snapshot: \(viewName)
                     some pixels were different by \(diff.maxColorDifference() * 100)% in color
                     max allowed difference in color: \(colorAccuracy * 100)%
                     see attached `difference` image between actual and expected
