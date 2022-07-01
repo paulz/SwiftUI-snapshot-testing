@@ -17,6 +17,7 @@
 		4B0584A2283ADCD80027DAD5 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B05849F283ADCB00027DAD5 /* UIViewExtensions.swift */; };
 		4B0584A3283ADCD80027DAD5 /* verifySnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0584A0283ADCB00027DAD5 /* verifySnapshot.swift */; };
 		4B0584A5283ADFBF0027DAD5 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0584A4283ADFBF0027DAD5 /* FavoriteView.swift */; };
+		4B0A572628698CEB000EF399 /* HRCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4B0A572528698CEB000EF399 /* HRCoder */; };
 		4B77755928547AC60044E2BC /* CIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B77755828547AC60044E2BC /* CIImage+Extensions.swift */; };
 		4B9C573A284DE2DF001DE13A /* PreviewGroup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9C5734284DE2DF001DE13A /* PreviewGroup.framework */; };
 		4B9C573B284DE2DF001DE13A /* PreviewGroup.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9C5734284DE2DF001DE13A /* PreviewGroup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -119,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B0A572628698CEB000EF399 /* HRCoder in Frameworks */,
 				4B9C5744284DE438001DE13A /* PreviewGroup.framework in Frameworks */,
 				4B058496283A67DE0027DAD5 /* XCTest.framework in Frameworks */,
 			);
@@ -291,6 +293,9 @@
 				4B9C5743284DE37C001DE13A /* PBXTargetDependency */,
 			);
 			name = "SwiftUI-snapshot-test";
+			packageProductDependencies = (
+				4B0A572528698CEB000EF399 /* HRCoder */,
+			);
 			productName = "SwiftUI-snapshot-test";
 			productReference = 4B058482283A67650027DAD5 /* SwiftUI_snapshot_test.framework */;
 			productType = "com.apple.product-type.framework";
@@ -348,6 +353,9 @@
 				Base,
 			);
 			mainGroup = 4B058447283A66080027DAD5;
+			packageReferences = (
+				4B0A572428698CEB000EF399 /* XCRemoteSwiftPackageReference "HRCoder" */,
+			);
 			productRefGroup = 4B058451283A66090027DAD5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -830,6 +838,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4B0A572428698CEB000EF399 /* XCRemoteSwiftPackageReference "HRCoder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/paulz/HRCoder";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4B0A572528698CEB000EF399 /* HRCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4B0A572428698CEB000EF399 /* XCRemoteSwiftPackageReference "HRCoder" */;
+			productName = HRCoder;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4B058448283A66080027DAD5 /* Project object */;
 }

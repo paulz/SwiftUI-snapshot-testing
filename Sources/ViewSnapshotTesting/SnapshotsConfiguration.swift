@@ -5,10 +5,14 @@ public struct SnapshotsConfiguration {
     public var folderUrl: URL? = nil
     public var overwriteOnFailure = true
     public var colorAccuracy: Float = 0.02
+    public var useLayers = false
     
     public static func withColorAccuracy(_ value: Float, block: ()->Void) {
         let previous = snapshotsConfiguration
         snapshotsConfiguration.colorAccuracy = value
+        if value == 0 {
+            snapshotsConfiguration.useLayers = true
+        }
         block()
         snapshotsConfiguration = previous
     }

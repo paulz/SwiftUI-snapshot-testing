@@ -1,0 +1,99 @@
+{
+  "__CACodingContents" : [
+    "allowsEdgeAntialiasing",
+    "allowsGroupBlending",
+    "allowsGroupOpacity",
+    "backgroundColor",
+    "bounds",
+    "contentsFormat",
+    "delegate",
+    "name",
+    "needsDisplayOnBoundsChange",
+    "needsLayoutOnGeometryChange",
+    "opaque",
+    "position",
+    "securityMode",
+    "sublayers"
+  ],
+  "$class" : "CALayer",
+  "allowsEdgeAntialiasing" : false,
+  "allowsGroupBlending" : false,
+  "allowsGroupOpacity" : false,
+  "backgroundColor" : {
+    "$class" : "LKCGColorCodingProxy",
+    "a" : 0,
+    "b" : 0,
+    "g" : 0,
+    "r" : 0
+  },
+  "bounds" : {
+    "$class" : "LKNSValueCodingProxy",
+    "height" : 20.333333969116211,
+    "kind" : 2,
+    "width" : 54.666667938232422,
+    "x" : 0,
+    "y" : 0
+  },
+  "contentsFormat" : "RGBA8",
+  "name" : "VC:_TtGC7SwiftUI19UIHostingControllerVS_4Text_",
+  "needsDisplayOnBoundsChange" : false,
+  "needsLayoutOnGeometryChange" : true,
+  "opaque" : false,
+  "position" : {
+    "$class" : "LKNSValueCodingProxy",
+    "kind" : 0,
+    "x" : 27.333333969116211,
+    "y" : 57.166667938232422
+  },
+  "securityMode" : "insecure",
+  "sublayers" : {
+    "$class" : "LKNSArrayCodingProxy",
+    "array" : [
+      {
+        "__CACodingContents" : [
+          "allowsEdgeAntialiasing",
+          "allowsGroupOpacity",
+          "anchorPoint",
+          "bounds",
+          "contentsFormat",
+          "contentsGravity",
+          "contentsScale",
+          "delegate",
+          "needsDisplayOnBoundsChange",
+          "opaque",
+          "position",
+          "rasterizationScale"
+        ],
+        "$class" : "CALayer",
+        "allowsEdgeAntialiasing" : false,
+        "allowsGroupOpacity" : true,
+        "anchorPoint" : {
+          "$class" : "LKNSValueCodingProxy",
+          "kind" : 0,
+          "x" : 0,
+          "y" : 0
+        },
+        "bounds" : {
+          "$class" : "LKNSValueCodingProxy",
+          "height" : 20.333333969116211,
+          "kind" : 2,
+          "width" : 54.666667938232422,
+          "x" : 0,
+          "y" : 0
+        },
+        "contentsFormat" : "Automatic",
+        "contentsGravity" : "bottomLeft",
+        "contentsScale" : 3,
+        "needsDisplayOnBoundsChange" : false,
+        "opaque" : false,
+        "position" : {
+          "$class" : "LKNSValueCodingProxy",
+          "kind" : 0,
+          "x" : 0,
+          "y" : 0
+        },
+        "rasterizationScale" : 3
+      }
+    ]
+  }
+}

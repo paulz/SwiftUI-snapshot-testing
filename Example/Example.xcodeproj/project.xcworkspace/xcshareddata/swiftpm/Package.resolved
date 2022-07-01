@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "hrcoder",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/paulz/HRCoder",
+      "state" : {
+        "revision" : "760e0aee165934a4b6d08e5af7f617c4a560aa29",
+        "version" : "2.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}
