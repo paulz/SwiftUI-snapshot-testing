@@ -23,21 +23,20 @@ jobs:
     - name: Generate Swift package Xcode project
       run: |
         swift --version
-        swift package generate-xcodeproj
         xcodebuild -list
         xcrun simctl create iphone-12-pro "iPhone 12 Pro"
     - name: Build
-      uses: sersoft-gmbh/xcodebuild-action@master
+      uses: sersoft-gmbh/xcodebuild-action@v2
       with:
-        project: ${{ env.package }}.xcodeproj
-        scheme: ${{ env.package }}-Package
+        spm-package: .
+        scheme: ${{ env.package }}
         destination: ${{ env.destination }}
         action: build-for-testing
     - name: Test
-      uses: sersoft-gmbh/xcodebuild-action@master
+      uses: sersoft-gmbh/xcodebuild-action@v2
       with:
-        project: ${{ env.package }}.xcodeproj
-        scheme: ${{ env.package }}-Package
+        spm-package: .
+        scheme: ${{ env.package }}
         destination: ${{ env.destination }}
         action: test-without-building
     - name: Example Test
