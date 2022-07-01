@@ -25,14 +25,14 @@ jobs:
       run: xcodebuild -list
     - name: Simulator Prepare
       run: xcrun simctl create iphone-12-pro "iPhone 12 Pro"
-    - name: Build
+    - name: Build and Test Package
       uses: sersoft-gmbh/xcodebuild-action@v2
       with:
         spm-package: .
         scheme: SwiftUI-snapshot-testing
         destination: ${{ env.destination }}
         action: build-for-testing test-without-building
-    - name: Example Test
+    - name: Example App Test
       uses: sersoft-gmbh/xcodebuild-action@master
       with:
         project: Example/Example.xcodeproj
