@@ -14,12 +14,10 @@ let package = Package(
             name: "SwiftUI_SnapshotTesting",
             targets: ["ViewSnapshotTesting"]),
         .library(
-            name: "VisualTestKit",
-            targets: ["VisualTestKit"]),
-        .library(
             name: "SnapshotTestingPreviewGroup",
             targets: ["PreviewGroup"]),
     ],
+    dependencies: [.package(url: "https://github.com/paulz/VisualTestKit.framework", branch: "main")],
     targets: [
         .target(
             name: "ViewSnapshotTesting",
@@ -36,15 +34,11 @@ let package = Package(
             dependencies: [],
             path: "Sources/PreviewGroup"
         ),
-        .binaryTarget(
-            name: "VisualTestKit",
-            url: "https://github.com/paulz/VisualTestKit.framework/releases/download/v0.0.2/VisualTestKit.xcframework.zip",
-            checksum: "48b15eae813cde4136aa109fde05be1fe0dde6d28bc49b4e88f4fc294b926c2f"),
         .testTarget(
             name: "UnitTests",
             dependencies: [
                 .target(name: "ViewSnapshotTesting"),
-                .target(name: "VisualTestKit")
+                .product(name: "VisualTestKit", package: "VisualTestKit.framework")
             ],
             path: "Tests",
             exclude: ["Snapshots"]
