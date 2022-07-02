@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "visualtestkit.framework",
+      "identity" : "visualtestkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/paulz/VisualTestKit.framework",
+      "location" : "https://github.com/paulz/VisualTestKit.git",
       "state" : {
         "branch" : "main",
-        "revision" : "ad8d87708097fb80071a427f52c5224ddf533be2"
+        "revision" : "286eb5e8a0490d743c0e71918c5ba4532e5b6d66"
       }
     }
   ],
