@@ -22,7 +22,7 @@ let package = Package(
         .target(
             name: "ViewSnapshotTesting",
             dependencies: [
-                .target(name: "PreviewGroup")
+                .target(name: "PreviewGroup"),
             ],
             path: "Sources/ViewSnapshotTesting",
             linkerSettings: [
