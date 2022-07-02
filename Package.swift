@@ -17,7 +17,7 @@ let package = Package(
             name: "SnapshotTestingPreviewGroup",
             targets: ["PreviewGroup"]),
     ],
-    dependencies: [.package(url: "https://github.com/paulz/VisualTestKit.framework", branch: "main")],
+    dependencies: [.package(url: "https://github.com/paulz/VisualTestKit.git", branch: "main")],
     targets: [
         .target(
             name: "ViewSnapshotTesting",
@@ -38,7 +38,7 @@ let package = Package(
             name: "UnitTests",
             dependencies: [
                 .target(name: "ViewSnapshotTesting"),
-                .product(name: "VisualTestKit", package: "VisualTestKit.framework")
+                .product(name: "VisualTestKit", package: "VisualTestKit")
             ],
             path: "Tests",
             exclude: ["Snapshots"]
