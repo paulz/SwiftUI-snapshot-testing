@@ -138,14 +138,17 @@ func folderUrl(_ filePath: String = #filePath) -> URL {
 }
 
 /**
+ Force pending UI changes onto the render server
  Avoids runtime warning: *Unbalanced calls to begin/end appearance transition for UIViewController*
- 
  see: https://github.com/paulz/SwiftUI-snapshot-testing/issues/11
+ Allow viewDidAppear to be called
+ see: https://github.com/paulz/SwiftUI-snapshot-testing/issues/10
  */
-func allowAppearanceTransition() {
-    CATransaction.flush()
-    RunLoop.current.run(until: .init(timeIntervalSinceNow: 0))
-    CATransaction.flush()
+func allowUpdatesToUI(_ reason: String) {
+    (1...2).forEach { _ in
+        RunLoop.current.run(until: .init(timeIntervalSinceNow: 0))
+        CATransaction.flush()
+    }
 }
 
 func inWindowView<T>(_ controller: UIViewController, block: (UIView) throws -> T) throws -> T {
@@ -153,7 +156,7 @@ func inWindowView<T>(_ controller: UIViewController, block: (UIView) throws -> T
     window.makeKeyAndVisible()
     let rootController = UIViewController()
     window.rootViewController = rootController
-    allowAppearanceTransition()
+    allowUpdatesToUI("allow UIWindow update")
 
     let view = try XCTUnwrap(controller.view)
     
@@ -165,16 +168,16 @@ func inWindowView<T>(_ controller: UIViewController, block: (UIView) throws -> T
     view.backgroundColor = .clear
     let safeOrigin = layoutFrame.origin
     rootController.addChild(controller)
-    allowAppearanceTransition()
+    allowUpdatesToUI("Avoids runtime warning: Unbalanced calls to begin/end appearance transition for UIViewController")
     view.frame = .init(origin: safeOrigin, size: size)
     rootController.view.addSubview(controller.view)
     view.frame = .init(origin: safeOrigin, size: size)
     XCTAssertEqual(view.bounds.size, size)
-    allowAppearanceTransition()
+    allowUpdatesToUI("allow view DidAppear")
     defer {
         view.removeFromSuperview()
         controller.removeFromParent()
-        allowAppearanceTransition()
+        allowUpdatesToUI("balance appearance transition")
     }
     return try block(view)
 }
