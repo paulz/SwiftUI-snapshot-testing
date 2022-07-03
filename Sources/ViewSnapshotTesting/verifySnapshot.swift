@@ -143,7 +143,9 @@ func folderUrl(_ filePath: String = #filePath) -> URL {
  see: https://github.com/paulz/SwiftUI-snapshot-testing/issues/11
  */
 func allowAppearanceTransition() {
-    RunLoop.current.run(until: .init(timeIntervalSinceNow: 0.01))
+    CATransaction.flush()
+    RunLoop.current.run(until: .init(timeIntervalSinceNow: 0))
+    CATransaction.flush()
 }
 
 func inWindowView<T>(_ controller: UIViewController, block: (UIView) throws -> T) throws -> T {
