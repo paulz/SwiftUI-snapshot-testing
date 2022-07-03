@@ -168,6 +168,7 @@ func inWindowView<T>(_ controller: UIViewController, block: (UIView) throws -> T
     rootController.view.addSubview(controller.view)
     view.frame = .init(origin: safeOrigin, size: size)
     XCTAssertEqual(view.bounds.size, size)
+    allowAppearanceTransition()
     defer {
         view.removeFromSuperview()
         controller.removeFromParent()
