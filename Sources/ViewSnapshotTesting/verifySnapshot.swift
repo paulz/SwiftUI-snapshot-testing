@@ -146,7 +146,7 @@ func folderUrl(_ filePath: String = #filePath) -> URL {
  */
 func allowUpdatesToUI(_ reason: String) {
     (1...2).forEach { _ in
-        RunLoop.current.run(until: .init(timeIntervalSinceNow: 0))
+        RunLoop.current.run(until: .init(timeIntervalSinceNow: 0.01))
         CATransaction.flush()
     }
 }
