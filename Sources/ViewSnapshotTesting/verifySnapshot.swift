@@ -146,12 +146,13 @@ func folderUrl(_ filePath: String = #filePath) -> URL {
  */
 func allowUpdatesToUI(_ reason: String) {
     (1...2).forEach { _ in
-        RunLoop.current.run(until: .init(timeIntervalSinceNow: 0.1))
+        RunLoop.current.run(until: .init(timeIntervalSinceNow: 0))
         CATransaction.flush()
     }
 }
 
 func inWindowView<T>(_ controller: UIViewController, block: (UIView) throws -> T) throws -> T {
+    UIView.setAnimationsEnabled(false)
     let window = UIWindow()
     window.makeKeyAndVisible()
     let rootController = UIViewController()
@@ -178,6 +179,7 @@ func inWindowView<T>(_ controller: UIViewController, block: (UIView) throws -> T
         view.removeFromSuperview()
         controller.removeFromParent()
         allowUpdatesToUI("balance appearance transition")
+        UIView.setAnimationsEnabled(false)
     }
     return try block(view)
 }
