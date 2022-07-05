@@ -152,6 +152,7 @@ func allowUpdatesToUI(_ reason: String) {
 }
 
 func inWindowView<T>(_ controller: UIViewController, block: (UIView) throws -> T) throws -> T {
+    UIView.setAnimationsEnabled(false)
     let window = UIWindow()
     window.makeKeyAndVisible()
     let rootController = UIViewController()
@@ -178,6 +179,7 @@ func inWindowView<T>(_ controller: UIViewController, block: (UIView) throws -> T
         view.removeFromSuperview()
         controller.removeFromParent()
         allowUpdatesToUI("balance appearance transition")
+        UIView.setAnimationsEnabled(false)
     }
     return try block(view)
 }
